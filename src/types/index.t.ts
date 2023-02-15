@@ -1,5 +1,8 @@
 type Playlist = {
+  id: string;
   name: string;
+  imageURL: string;
+  songs: Song[];
 };
 
 type PlaylistSong = {
