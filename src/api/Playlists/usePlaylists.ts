@@ -26,7 +26,7 @@ export function usePlaylists() {
       setPlaylists(newPlaylists);
     };
     getPlaylists();
-  });
+  }, []);
 
   return playlists;
 }

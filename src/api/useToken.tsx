@@ -18,7 +18,7 @@ export function useToken(): [string, Dispatch<SetStateAction<string>>] {
       window.localStorage.setItem("token", newToken as string);
       setToken(newToken as string);
     }
-  }, [token]);
+  }, []);
 
   return [token, setToken];
 }

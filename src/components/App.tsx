@@ -3,6 +3,7 @@ import { Login } from "./Pages/Login";
 import { Home } from "./Pages/Home";
 import { NavBar } from "./Compounds/NavBar";
 import { Route, Routes } from "react-router-dom";
+import { PlaylistPage } from "./Pages/PlaylistPage";
 
 export function App() {
   const [token, setToken] = useToken();
@@ -15,7 +16,10 @@ export function App() {
         <Routes>
           <Route
             path="/"
-            element={<Home />}
+            element={<Home />}></Route>
+          <Route
+            path=":id"
+            element={<PlaylistPage />}
           />
         </Routes>
       </div>

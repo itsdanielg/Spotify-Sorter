@@ -6,8 +6,9 @@ type Playlist = {
 };
 
 type PlaylistSong = {
-  id: number;
-  details: Song;
+  id: string;
+  index: number;
+  song: Song;
   rearranged: boolean;
   leftChanged?: boolean;
   rightChanged?: boolean;
@@ -17,7 +18,7 @@ type Song = {
   title: string;
   artist: string;
   album: string;
-  albumCover: string;
+  albumURL: string;
   releaseDate: string;
   dateAdded: string;
 };

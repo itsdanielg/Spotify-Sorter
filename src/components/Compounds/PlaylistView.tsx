@@ -1,33 +1,34 @@
-import { useState } from "react";
-import { PlaylistSong } from "../../types/index.t";
+import { usePlaylistSongs } from "../../api/Playlists/usePlaylistSongs";
 import { SongRow } from "../Atoms/SongRow";
 
 interface PlaylistViewProps {
-  url: string;
+  playlistId: string;
 }
 
-export function PlaylistView() {
-  const [songs, setSongs] = useState<PlaylistSong[]>([]);
+export function PlaylistView({ playlistId }: PlaylistViewProps) {
+  const playlistSongs = usePlaylistSongs(playlistId);
 
   return (
-    <div className="table">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Release Date</th>
-            <th>Title</th>
-            <th>Artist</th>
-            <th>Image</th>
-            <th>Album</th>
-          </tr>
-        </thead>
-        <tbody>
-          {songs.map((song) => {
-            return <SongRow song={song} />;
-          })}
-        </tbody>
-      </table>
-    </div>
+    <table className="border-2 w-4/6">
+      <thead>
+        <tr className="[&>*]:p-2 [&>*]:border-2 text-left">
+          <th className="w-[1px] whitespace-nowrap">#</th>
+          <th className="w-[1px] whitespace-nowrap">Release Date</th>
+          <th>Title</th>
+          <th className="w-[1px] whitespace-nowrap">Artist</th>
+          <th colSpan={2}>Album</th>
+          <th className="w-[1px] whitespace-nowrap">Date Added</th>
+        </tr>
+      </thead>
+      <tbody>
+        {playlistSongs.map(({ id, index, song }) => (
+          <SongRow
+            key={id}
+            index={index + 1}
+            song={song}
+          />
+        ))}
+      </tbody>
+    </table>
   );
 }
