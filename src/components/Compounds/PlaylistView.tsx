@@ -9,15 +9,15 @@ export function PlaylistView({ playlistId }: PlaylistViewProps) {
   const playlistSongs = usePlaylistSongs(playlistId);
 
   return (
-    <table className="border-2 w-4/6">
+    <table className="border-b-2 w-4/6">
       <thead>
-        <tr className="[&>*]:p-2 [&>*]:border-2 text-left">
-          <th className="w-[1px] whitespace-nowrap">#</th>
-          <th className="w-[1px] whitespace-nowrap">Release Date</th>
-          <th>Title</th>
-          <th className="w-[1px] whitespace-nowrap">Artist</th>
+        <tr className="sticky top-0 bg-neutral-800 text-neutral-100 [&>*]:p-2 [&>*]:border-x-2 text-left">
+          <th className="text-center">#</th>
+          <th className="text-center">Release Date</th>
+          <th colSpan={2}>Title</th>
+          <th>Artist</th>
           <th colSpan={2}>Album</th>
-          <th className="w-[1px] whitespace-nowrap">Date Added</th>
+          <th className="text-center">Date Added</th>
         </tr>
       </thead>
       <tbody>

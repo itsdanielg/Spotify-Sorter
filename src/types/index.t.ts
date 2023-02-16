@@ -16,11 +16,13 @@ type PlaylistSong = {
 
 type Song = {
   title: string;
-  artist: string;
+  artists: string[];
   album: string;
   albumURL: string;
+  trackNumber: number;
   releaseDate: string;
   dateAdded: string;
+  timeAdded: string;
 };
 
 export type { Playlist, PlaylistSong, Song };

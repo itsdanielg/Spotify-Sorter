@@ -21,11 +21,13 @@ export function usePlaylistSongs(playlistId: string) {
           index: index,
           song: {
             title: playlistSong.track.name,
-            artist: playlistSong.track.artists[0].name,
+            artists: playlistSong.track.artists.map((artist: any) => artist.name),
             album: playlistSong.track.album.name,
             albumURL: playlistSong.track.album.images[0].url,
             releaseDate: playlistSong.track.album.release_date,
             dateAdded: new Date(playlistSong.added_at).toLocaleDateString(),
+            timeAdded: new Date(playlistSong.added_at).toLocaleTimeString(),
+            trackNumber: playlistSong.track.track_number,
           } as Song,
           rearranged: false,
         } as PlaylistSong;
