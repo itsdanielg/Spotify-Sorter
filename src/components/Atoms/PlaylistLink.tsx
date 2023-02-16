@@ -7,7 +7,7 @@ interface PlaylistLinkProps {
   width?: string;
 }
 
-const sampleURL = "https://i.scdn.co/image/ab67616d0000b27311b7621f71aab1085a2b1ee7";
+const sampleURL = "https://gtrusted.com/resources/images/noimage.jpg";
 
 export function PlaylistLink({ id, name, imageURL, width }: PlaylistLinkProps) {
   return (
@@ -17,7 +17,7 @@ export function PlaylistLink({ id, name, imageURL, width }: PlaylistLinkProps) {
         to={`${id}`}>
         <img
           className="w-full h-full"
-          src={imageURL}
+          src={imageURL !== "" ? imageURL : sampleURL}
           alt={sampleURL}
         />
       </Link>

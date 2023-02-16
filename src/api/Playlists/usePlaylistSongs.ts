@@ -7,12 +7,9 @@ export function usePlaylistSongs(playlistId: string) {
   const [playlistSongs, setPlaylist] = useState<PlaylistSong[]>([]);
   const [token] = useToken();
 
-  console.log(playlistSongs);
-
   useEffect(() => {
     const getPlaylist = async () => {
       const { data, error } = await fetchPlaylistSongs(token, playlistId);
-
       if (error || !data) {
         setPlaylist([]);
         return;

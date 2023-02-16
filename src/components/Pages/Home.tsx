@@ -1,4 +1,3 @@
-import { Outlet } from "react-router-dom";
 import { usePlaylists } from "../../api/Playlists/usePlaylists";
 import { Playlist } from "../../types/index.t";
 import { PlaylistLink } from "../Atoms/PlaylistLink";

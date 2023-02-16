@@ -14,16 +14,16 @@ export function usePlaylists() {
         setPlaylists([]);
         return;
       }
-      const userPlaylists = data.data.items;
-      const newPlaylists = userPlaylists.map((playlist: any) => {
+
+      const dataPlaylists = data.map((playlist: any) => {
         return {
           id: playlist.id,
           name: playlist.name,
-          imageURL: playlist.images[0].url,
+          imageURL: playlist.images[0]?.url ?? "",
           songs: [],
         } as Playlist;
       });
-      setPlaylists(newPlaylists);
+      setPlaylists(dataPlaylists);
     };
     getPlaylists();
   }, []);
