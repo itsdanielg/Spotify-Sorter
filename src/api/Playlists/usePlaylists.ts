@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import { useEffect, useState } from "react";
 import { Playlist } from "../../types/index.t";
 import { useToken } from "../useToken";

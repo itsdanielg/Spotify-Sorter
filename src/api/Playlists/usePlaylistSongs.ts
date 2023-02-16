@@ -1,11 +1,22 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import { useEffect, useState } from "react";
 import { PlaylistSong, Song } from "../../types/index.t";
+import { markChangedSongs } from "../../util/markChangedSongs";
+import { sortByRelease } from "../../util/sortByRelease";
 import { useToken } from "../useToken";
 import { fetchPlaylistSongs } from "./fetchPlaylistSongs";
 
 export function usePlaylistSongs(playlistId: string) {
   const [playlistSongs, setPlaylist] = useState<PlaylistSong[]>([]);
   const [token] = useToken();
+
+  const sortPlaylist = () => {
+    const newPlaylist = [...playlistSongs];
+    const orderedPlaylist = sortByRelease(newPlaylist);
+    const finalPlaylist = markChangedSongs(orderedPlaylist, newPlaylist);
+    setPlaylist(finalPlaylist);
+  };
 
   useEffect(() => {
     const getPlaylist = async () => {
@@ -38,5 +49,5 @@ export function usePlaylistSongs(playlistId: string) {
     getPlaylist();
   }, []);
 
-  return playlistSongs;
+  return { playlistSongs, sortPlaylist };
 }

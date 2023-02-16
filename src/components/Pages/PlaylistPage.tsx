@@ -6,12 +6,16 @@ import { PlaylistView } from "../Compounds/PlaylistView";
 
 export function PlaylistPage() {
   const location = useLocation();
-  const playlistSongs = usePlaylistSongs(location.pathname.substring(1));
+  const { playlistSongs, sortPlaylist } = usePlaylistSongs(location.pathname.substring(1));
 
   if (playlistSongs.length === 0) return <Loading />;
   return (
-    <div className="flex flex-col items-center p-8 gap-8">
-      <PlaylistEditBar totalTracks={playlistSongs.length} />
+    <div className="relative flex flex-col items-center p-8 gap-8">
+      <PlaylistEditBar
+        totalTracks={playlistSongs.length}
+        sortPlaylist={sortPlaylist}
+        loading={playlistSongs.length !== 0}
+      />
       <PlaylistView playlistSongs={playlistSongs} />
     </div>
   );

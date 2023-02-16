@@ -3,14 +3,22 @@ import { Song } from "../../types/index.t";
 export interface SongRowProps {
   index: number;
   song: Song;
+  leftChanged: boolean;
+  rightChanged: boolean;
+  rearranged: boolean;
 }
 
 export function SongRow({
   index,
   song: { title, artists, album, albumURL, releaseDate, dateAdded, timeAdded, trackNumber },
+  leftChanged,
+  rightChanged,
+  rearranged,
 }: SongRowProps) {
+  const background = leftChanged && rightChanged ? "bg-green-100" : leftChanged || rightChanged ? "bg-sky-100" : "";
+
   return (
-    <tr className={`${index % 2 ? "bg-stone-400" : ""} [&>*]:p-2 [&>td]:border-x-2`}>
+    <tr className={`${background} [&>*]:p-2 [&>td]:border-x-2`}>
       <td className="w-[4%] text-center">{index}</td>
       <td className="w-[10%] text-center">{releaseDate}</td>
       <td className="w-[6%]">

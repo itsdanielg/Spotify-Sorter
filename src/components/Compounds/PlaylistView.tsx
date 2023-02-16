@@ -19,11 +19,14 @@ export function PlaylistView({ playlistSongs }: PlaylistViewProps) {
         </tr>
       </thead>
       <tbody>
-        {playlistSongs.map(({ id, index, song }) => (
+        {playlistSongs.map(({ id, index, song, leftChanged, rightChanged, rearranged }) => (
           <SongRow
             key={id}
             index={index + 1}
             song={song}
+            leftChanged={!!leftChanged}
+            rightChanged={!!rightChanged}
+            rearranged={!!rearranged}
           />
         ))}
       </tbody>
