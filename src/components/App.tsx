@@ -10,13 +10,14 @@ export function App() {
 
   if (!token) return <Login />;
   return (
-    <div className="w-full h-screen flex flex-col bg-stone-300">
+    <div className="w-full h-screen flex flex-col bg-gray-2">
       <NavBar setToken={setToken} />
       <div className="w-full h-full overflow-y-auto overflow-x-hidden">
         <Routes>
           <Route
             path="/"
-            element={<Home />}></Route>
+            element={<Home />}
+          />
           <Route
             path=":id"
             element={<PlaylistPage />}

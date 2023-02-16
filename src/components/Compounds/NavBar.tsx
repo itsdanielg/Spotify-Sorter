@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
+import { Button } from "../Atoms/Button";
 
 interface NavBarProps {
   setToken: Dispatch<SetStateAction<string>>;
@@ -9,23 +10,25 @@ export function NavBar({ setToken }: NavBarProps) {
   const logout = () => {
     setToken("");
     window.localStorage.removeItem("token");
+    window.location.href = "/";
   };
 
   return (
-    <div className="w-full bg-stone-700 flex items-center gap-4 p-5">
-      <span className="text-white text-2xl">Welcome Daniel!</span>
-      <div>
+    <div className="w-full bg-black flex items-center justify-between gap-4 p-5">
+      <span className="text-white text-4xl grow">Welcome Daniel!</span>
+      <div className="flex items-center justify-center px-8">
         <Link
-          className="text-lg text-emerald-500"
+          className="text-lg text-green hover:text-white hover:underline transition"
           to={"/"}>
           Playlists
         </Link>
       </div>
-      <button
-        className="p-3 rounded-lg bg-green-400 ml-auto hover:opacity-50 transition"
-        onClick={() => logout()}>
-        Log Out
-      </button>
+      <div>
+        <Button
+          label="Log Out"
+          onClick={() => logout()}
+        />
+      </div>
     </div>
   );
 }

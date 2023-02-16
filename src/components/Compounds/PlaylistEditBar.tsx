@@ -9,8 +9,8 @@ export interface PlaylistEditBarProps {
 
 export function PlaylistEditBar({ totalTracks, sortPlaylist, loading }: PlaylistEditBarProps) {
   return (
-    <div className="flex items-center gap-4 bg-stone-500 w-[80%] p-4">
-      <span className="text-neutral-200">
+    <div className="flex items-center gap-4 bg-gray-3 w-[80%] p-4">
+      <span className="text-gray-1">
         Total Tracks:
         <span className="font-bold">{` ${totalTracks}`}</span>
       </span>
