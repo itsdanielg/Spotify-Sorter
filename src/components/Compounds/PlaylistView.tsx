@@ -1,13 +1,11 @@
-import { usePlaylistSongs } from "../../api/Playlists/usePlaylistSongs";
+import { PlaylistSong } from "../../types/index.t";
 import { SongRow } from "../Atoms/SongRow";
 
 interface PlaylistViewProps {
-  playlistId: string;
+  playlistSongs: PlaylistSong[];
 }
 
-export function PlaylistView({ playlistId }: PlaylistViewProps) {
-  const playlistSongs = usePlaylistSongs(playlistId);
-
+export function PlaylistView({ playlistSongs }: PlaylistViewProps) {
   return (
     <table className="border-b-2 w-4/6">
       <thead>

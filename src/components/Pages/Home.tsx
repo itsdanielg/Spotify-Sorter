@@ -1,10 +1,12 @@
 import { usePlaylists } from "../../api/Playlists/usePlaylists";
 import { Playlist } from "../../types/index.t";
+import { Loading } from "../Atoms/Loading";
 import { PlaylistLink } from "../Atoms/PlaylistLink";
 
 export function Home() {
   const playlists: Playlist[] = usePlaylists();
 
+  if (playlists.length === 0) return <Loading />;
   return (
     <div className="flex flex-col p-6 gap-4">
       <div className="flex justify-center mb-8">
