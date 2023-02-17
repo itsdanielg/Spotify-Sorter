@@ -4,9 +4,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        green: "#49d667",
-        black: "#000000",
-        white: "#fffff1",
+        "green-1": "#49d667",
+        "green-2": "#3fb85a",
+        "green-3": "#4fe36f", // hover
+        "white-1": "#fffff1",
         "gray-1": "#b3b3b3", // subtext
         "gray-2": "#222222", // header
         "gray-3": "#181818", // table header

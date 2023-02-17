@@ -5,7 +5,7 @@ export interface LogButtonProps {
 export function LogButton({ authURL }: LogButtonProps) {
   return (
     <a
-      className="p-3 rounded-lg bg-green hover:opacity-50 transition"
+      className="p-3 rounded-lg bg-green-1 hover:opacity-50 transition"
       href={authURL}>
       LOGIN TO SPOTIFY
     </a>

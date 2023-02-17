@@ -11,14 +11,8 @@ describe("markChangedSongs", () => {
       mockPlaylistSongs[4],
     ];
     const finalPlaylist = markChangedSongs(mockPlaylistSongs, unorderedPlaylist);
-    console.log(finalPlaylist);
 
-    const expectedResult = mockPlaylistSongs.map((song) => {
-      song.leftChanged = false;
-      song.rightChanged = false;
-      song.rearranged = false;
-      return song;
-    });
+    const expectedResult = [...mockPlaylistSongs];
     expectedResult[0].leftChanged = true;
     expectedResult[0].rightChanged = true;
     expectedResult[0].rearranged = true;
@@ -27,8 +21,6 @@ describe("markChangedSongs", () => {
     expectedResult[2].rightChanged = true;
     expectedResult[2].rearranged = true;
     expectedResult[3].leftChanged = true;
-
-    console.log(expectedResult);
 
     expect(finalPlaylist).toEqual(expectedResult);
   });

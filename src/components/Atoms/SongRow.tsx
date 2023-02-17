@@ -15,10 +15,14 @@ export function SongRow({
   rightChanged,
   rearranged,
 }: SongRowProps) {
-  const background = leftChanged && rightChanged ? "bg-green" : leftChanged || rightChanged ? "bg-sky-100" : "";
+  const getBackground = () => {
+    if (leftChanged && rightChanged) return "text-black bg-green-2 hover:bg-green-3";
+    if (leftChanged || rightChanged) return "text-black bg-sky-200 hover:bg-sky-100";
+    return "";
+  };
 
   return (
-    <tr className={`${background} [&>*]:p-2 [&>td]:border-x-2 text-white bg-gray-5 hover:bg-gray-6 transition`}>
+    <tr className={`${getBackground()} [&>*]:p-2 [&>td]:border-x-2 text-white-1 bg-gray-5 hover:bg-gray-6 transition`}>
       <td className="w-[4%] text-center">{index}</td>
       <td className="w-[10%] text-center">{releaseDate}</td>
       <td className="w-[6%]">

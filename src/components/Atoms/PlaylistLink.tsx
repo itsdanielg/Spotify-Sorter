@@ -22,7 +22,7 @@ export function PlaylistLink({ id, name, imageURL, width }: PlaylistLinkProps) {
             alt={sampleURL}
           />
         </div>
-        <span className="text-white text-xl">{name}</span>
+        <span className="text-white-1 text-xl">{name}</span>
       </Link>
     </div>
   );

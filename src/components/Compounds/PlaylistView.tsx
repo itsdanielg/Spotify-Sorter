@@ -9,7 +9,7 @@ export function PlaylistView({ playlistSongs }: PlaylistViewProps) {
   return (
     <table className="border-2 w-4/6">
       <thead>
-        <tr className="sticky top-0 bg-gray-3 text-white [&>*]:p-2 [&>*]:border-2 text-left">
+        <tr className="sticky top-0 bg-gray-3 text-white-1 [&>*]:p-2 [&>*]:border-2 text-left">
           <th className="text-center">#</th>
           <th className="text-center">Release Date</th>
           <th colSpan={2}>Title</th>

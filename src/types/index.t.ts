@@ -10,8 +10,8 @@ type PlaylistSong = {
   index: number;
   song: Song;
   rearranged: boolean;
-  leftChanged?: boolean;
-  rightChanged?: boolean;
+  leftChanged: boolean;
+  rightChanged: boolean;
 };
 
 type Song = {

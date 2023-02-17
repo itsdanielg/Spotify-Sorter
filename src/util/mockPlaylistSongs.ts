@@ -15,6 +15,8 @@ export const mockPlaylistSongs: PlaylistSong[] = [
       timeAdded: "2022-01-01",
     } as unknown as Song,
     rearranged: false,
+    leftChanged: false,
+    rightChanged: false,
   },
   {
     id: "1",
@@ -30,6 +32,8 @@ export const mockPlaylistSongs: PlaylistSong[] = [
       timeAdded: "2022-01-01",
     } as unknown as Song,
     rearranged: false,
+    leftChanged: false,
+    rightChanged: false,
   },
   {
     id: "2",
@@ -45,6 +49,8 @@ export const mockPlaylistSongs: PlaylistSong[] = [
       timeAdded: "2022-01-01",
     } as unknown as Song,
     rearranged: false,
+    leftChanged: false,
+    rightChanged: false,
   },
   {
     id: "3",
@@ -60,6 +66,8 @@ export const mockPlaylistSongs: PlaylistSong[] = [
       timeAdded: "2022-01-01",
     } as unknown as Song,
     rearranged: false,
+    leftChanged: false,
+    rightChanged: false,
   },
   {
     id: "4",
@@ -75,5 +83,7 @@ export const mockPlaylistSongs: PlaylistSong[] = [
       timeAdded: "2022-01-01",
     } as unknown as Song,
     rearranged: false,
+    leftChanged: false,
+    rightChanged: false,
   },
 ];

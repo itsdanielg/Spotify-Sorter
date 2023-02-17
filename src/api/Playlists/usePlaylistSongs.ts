@@ -9,13 +9,44 @@ import { fetchPlaylistSongs } from "./fetchPlaylistSongs";
 
 export function usePlaylistSongs(playlistId: string) {
   const [playlistSongs, setPlaylist] = useState<PlaylistSong[]>([]);
+  const [unorderedPlaylistSongs, setUnorderedPlaylistSongs] = useState<PlaylistSong[]>([]);
+  const [isChanged, setIsChanged] = useState<boolean>(false);
+
+  useEffect(() => {
+    for (let i = 0; i < playlistSongs.length; i++) {
+      if (playlistSongs[0].id !== unorderedPlaylistSongs[0].id) {
+        setIsChanged(true);
+        return;
+      }
+    }
+    setIsChanged(false);
+  }, [playlistSongs, unorderedPlaylistSongs]);
+
   const [token] = useToken();
 
   const sortPlaylist = () => {
     const newPlaylist = [...playlistSongs];
     const orderedPlaylist = sortByRelease(newPlaylist);
-    const finalPlaylist = markChangedSongs(orderedPlaylist, newPlaylist);
+    const finalPlaylist = markChangedSongs(orderedPlaylist, unorderedPlaylistSongs);
     setPlaylist(finalPlaylist);
+  };
+
+  const resetChanges = () => {
+    const oldPlaylistSongs = [...unorderedPlaylistSongs].map((song) => {
+      song.leftChanged = false;
+      song.rightChanged = false;
+      song.rearranged = false;
+      return song;
+    });
+    setPlaylist(oldPlaylistSongs);
+  };
+
+  const saveChanges = async () => {
+    const { data, error } = await fetchPlaylistSongs(token, playlistId);
+    if (error || !data) {
+      return;
+    }
+    setUnorderedPlaylistSongs(playlistSongs);
   };
 
   useEffect(() => {
@@ -41,13 +72,16 @@ export function usePlaylistSongs(playlistId: string) {
             trackNumber: playlistSong.track.track_number,
           } as Song,
           rearranged: false,
+          leftChanged: false,
+          rightChanged: false,
         } as PlaylistSong;
       });
       setPlaylist(dataPlaylistSongs);
+      setUnorderedPlaylistSongs(dataPlaylistSongs);
     };
 
     getPlaylist();
   }, []);
 
-  return { playlistSongs, sortPlaylist };
+  return { playlistSongs, isChanged, sortPlaylist, resetChanges };
 }
