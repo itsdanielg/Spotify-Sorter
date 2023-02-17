@@ -14,7 +14,7 @@ export function usePlaylistSongs(playlistId: string) {
 
   useEffect(() => {
     for (let i = 0; i < playlistSongs.length; i++) {
-      if (playlistSongs[0].id !== unorderedPlaylistSongs[0].id) {
+      if (playlistSongs[i].id !== unorderedPlaylistSongs[i].id) {
         setIsChanged(true);
         return;
       }
@@ -23,6 +23,15 @@ export function usePlaylistSongs(playlistId: string) {
   }, [playlistSongs, unorderedPlaylistSongs]);
 
   const [token] = useToken();
+
+  const moveSong = (sourceIndex: number, destinationIndex: number) => {
+    const newPlaylist = [...playlistSongs];
+    const [movedSong] = newPlaylist.splice(sourceIndex, 1);
+    movedSong.rearranged = true;
+    newPlaylist.splice(destinationIndex, 0, movedSong);
+    const finalPlaylist = markChangedSongs(newPlaylist, unorderedPlaylistSongs);
+    setPlaylist(finalPlaylist);
+  };
 
   const sortPlaylist = () => {
     const newPlaylist = [...playlistSongs];
@@ -83,5 +92,5 @@ export function usePlaylistSongs(playlistId: string) {
     getPlaylist();
   }, []);
 
-  return { playlistSongs, isChanged, sortPlaylist, resetChanges };
+  return { playlistSongs, isChanged, moveSong, sortPlaylist, resetChanges };
 }

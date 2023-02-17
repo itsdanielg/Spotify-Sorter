@@ -16,24 +16,25 @@ export function SongRow({
   rearranged,
 }: SongRowProps) {
   const getBackground = () => {
+    if (rearranged) return "text-black bg-green-2 hover:bg-green-3";
     if (leftChanged && rightChanged) return "text-black bg-green-2 hover:bg-green-3";
     if (leftChanged || rightChanged) return "text-black bg-sky-200 hover:bg-sky-100";
-    return "";
+    return "text-white-1 bg-gray-5 hover:bg-gray-6";
   };
 
   return (
-    <tr className={`${getBackground()} [&>*]:p-2 [&>td]:border-x-2 text-white-1 bg-gray-5 hover:bg-gray-6 transition`}>
-      <td className="w-[4%] text-center">{index}</td>
-      <td className="w-[10%] text-center">{releaseDate}</td>
-      <td className="w-[6%]">
+    <div className={`${getBackground()} flex items-center w-full transition [&>*]:p-2`}>
+      <span className="w-[5%] text-center">{index + 1}</span>
+      <span className="w-[10%] text-center">{releaseDate}</span>
+      <span className="w-[5%] p-2">
         <img
           className="w-full h-full"
           src={albumURL}
           alt="404"
         />
-      </td>
-      <td className="w-[30%]">{title}</td>
-      <td className="w-[20%]">
+      </span>
+      <span className="w-[30%]">{title}</span>
+      <span className="w-[15%]">
         {artists.map((artist, index) => (
           <p
             key={`${album} ${artist}`}
@@ -41,14 +42,13 @@ export function SongRow({
             {artist}
           </p>
         ))}
-      </td>
-
-      <td className="w-[18%]">{album}</td>
-      <td className="w-[2%] text-center">{trackNumber}</td>
-      <td className="text-center">
+      </span>
+      <span className="w-[23%]">{album}</span>
+      <span className="w-[2%] text-center">{trackNumber}</span>
+      <span className="w-[10%] text-center">
         <p>{dateAdded}</p>
         <p>{timeAdded}</p>
-      </td>
-    </tr>
+      </span>
+    </div>
   );
 }
