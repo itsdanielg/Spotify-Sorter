@@ -6,12 +6,10 @@ export interface DraggableSongRowProps {
   id: string;
   index: number;
   song: Song;
-  leftChanged: boolean;
-  rightChanged: boolean;
   rearranged: boolean;
 }
 
-export function DraggableSongRow({ id, index, song, leftChanged, rightChanged, rearranged }: DraggableSongRowProps) {
+export function DraggableSongRow({ id, index, song, rearranged }: DraggableSongRowProps) {
   return (
     <DraggableRow
       draggableId={id}
@@ -20,8 +18,6 @@ export function DraggableSongRow({ id, index, song, leftChanged, rightChanged, r
         key={id}
         index={index}
         song={song}
-        leftChanged={!!leftChanged}
-        rightChanged={!!rightChanged}
         rearranged={!!rearranged}
       />
     </DraggableRow>

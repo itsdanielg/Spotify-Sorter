@@ -14,7 +14,8 @@ export function PlaylistView({ playlistSongs, moveSong }: PlaylistViewProps) {
         <span className="w-[10%] text-center">Release Date</span>
         <span className="w-[35%]">Title</span>
         <span className="w-[15%]">Artist</span>
-        <span className="w-[25%]">Album</span>
+        <span className="w-[20%]">Album</span>
+        <span className="w-[5%]">Track</span>
         <span className="w-[10%] text-center">Date Added</span>
       </div>
       <DraggablePlaylistSongs

@@ -6,7 +6,7 @@ import { PlaylistView } from "../Compounds/PlaylistView";
 
 export function PlaylistPage() {
   const location = useLocation();
-  const { playlistSongs, isChanged, moveSong, sortPlaylist, resetChanges } = usePlaylistSongs(
+  const { playlistSongs, loading, isChanged, moveSong, sortPlaylist, resetChanges } = usePlaylistSongs(
     location.pathname.substring(1)
   );
 
@@ -18,7 +18,7 @@ export function PlaylistPage() {
         isChanged={isChanged}
         sortPlaylist={sortPlaylist}
         resetChanges={resetChanges}
-        loading={playlistSongs.length === 0}
+        loading={loading}
       />
       <PlaylistView
         playlistSongs={playlistSongs}

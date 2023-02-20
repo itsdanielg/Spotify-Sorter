@@ -22,14 +22,12 @@ export function DraggablePlaylistSongs({ playlistSongs, moveSong }: DraggablePla
             {...provided.droppableProps}
             ref={provided.innerRef}
             className="flex flex-col items-center">
-            {playlistSongs.map(({ id, index, song, leftChanged, rightChanged, rearranged }) => (
+            {playlistSongs.map(({ id, index, song, rearranged }) => (
               <DraggableSongRow
                 key={id}
                 id={id}
                 index={index}
                 song={song}
-                leftChanged={!!leftChanged}
-                rightChanged={!!rightChanged}
                 rearranged={!!rearranged}
               />
             ))}

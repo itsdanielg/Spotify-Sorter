@@ -3,47 +3,38 @@
 import { useEffect, useState } from "react";
 import { PlaylistSong, Song } from "../../types/index.t";
 import { markChangedSongs } from "../../util/markChangedSongs";
-import { sortByRelease } from "../../util/sortByRelease";
+import { sortAndMarkPlaylist } from "../../util/sortAndMarkPlaylist";
 import { useToken } from "../useToken";
 import { fetchPlaylistSongs } from "./fetchPlaylistSongs";
 
 export function usePlaylistSongs(playlistId: string) {
+  const [token] = useToken();
+
   const [playlistSongs, setPlaylist] = useState<PlaylistSong[]>([]);
   const [unorderedPlaylistSongs, setUnorderedPlaylistSongs] = useState<PlaylistSong[]>([]);
-  const [isChanged, setIsChanged] = useState<boolean>(false);
-
-  useEffect(() => {
-    for (let i = 0; i < playlistSongs.length; i++) {
-      if (playlistSongs[i].id !== unorderedPlaylistSongs[i].id) {
-        setIsChanged(true);
-        return;
-      }
-    }
-    setIsChanged(false);
-  }, [playlistSongs, unorderedPlaylistSongs]);
-
-  const [token] = useToken();
+  const [isChanged, setIsChanged] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const moveSong = (sourceIndex: number, destinationIndex: number) => {
     const newPlaylist = [...playlistSongs];
     const [movedSong] = newPlaylist.splice(sourceIndex, 1);
-    movedSong.rearranged = true;
     newPlaylist.splice(destinationIndex, 0, movedSong);
-    const finalPlaylist = markChangedSongs(newPlaylist, unorderedPlaylistSongs);
+    const finalPlaylist = markChangedSongs(newPlaylist);
     setPlaylist(finalPlaylist);
   };
 
-  const sortPlaylist = () => {
-    const newPlaylist = [...playlistSongs];
-    const orderedPlaylist = sortByRelease(newPlaylist);
-    const finalPlaylist = markChangedSongs(orderedPlaylist, unorderedPlaylistSongs);
-    setPlaylist(finalPlaylist);
+  const sortPlaylist = async () => {
+    const { sortedPlaylist, error } = await sortAndMarkPlaylist(playlistSongs);
+    if (error) {
+      setLoading(false);
+    } else if (sortedPlaylist) {
+      setPlaylist(sortedPlaylist);
+      setLoading(false);
+    }
   };
 
   const resetChanges = () => {
     const oldPlaylistSongs = [...unorderedPlaylistSongs].map((song) => {
-      song.leftChanged = false;
-      song.rightChanged = false;
       song.rearranged = false;
       return song;
     });
@@ -59,13 +50,22 @@ export function usePlaylistSongs(playlistId: string) {
   };
 
   useEffect(() => {
+    for (let i = 0; i < playlistSongs.length; i++) {
+      if (playlistSongs[i].id !== unorderedPlaylistSongs[i].id) {
+        setIsChanged(true);
+        return;
+      }
+    }
+    setIsChanged(false);
+  }, [playlistSongs, unorderedPlaylistSongs]);
+
+  useEffect(() => {
     const getPlaylist = async () => {
       const { data, error } = await fetchPlaylistSongs(token, playlistId);
       if (error || !data) {
         setPlaylist([]);
         return;
       }
-
       const dataPlaylistSongs = data.map((playlistSong: any, index: number) => {
         return {
           id: playlistSong.track.id,
@@ -81,16 +81,13 @@ export function usePlaylistSongs(playlistId: string) {
             trackNumber: playlistSong.track.track_number,
           } as Song,
           rearranged: false,
-          leftChanged: false,
-          rightChanged: false,
         } as PlaylistSong;
       });
       setPlaylist(dataPlaylistSongs);
       setUnorderedPlaylistSongs(dataPlaylistSongs);
     };
-
     getPlaylist();
   }, []);
 
-  return { playlistSongs, isChanged, moveSong, sortPlaylist, resetChanges };
+  return { playlistSongs, isChanged, loading, moveSong, sortPlaylist, resetChanges };
 }

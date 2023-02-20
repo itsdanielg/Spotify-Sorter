@@ -3,13 +3,13 @@ import { Loading } from "../Atoms/Loading";
 
 export interface PlaylistEditBarProps {
   totalTracks: number;
+  loading: boolean;
   isChanged: boolean;
   sortPlaylist: () => void;
   resetChanges: () => void;
-  loading: boolean;
 }
 
-export function PlaylistEditBar({ totalTracks, isChanged, sortPlaylist, resetChanges, loading }: PlaylistEditBarProps) {
+export function PlaylistEditBar({ totalTracks, loading, isChanged, sortPlaylist, resetChanges }: PlaylistEditBarProps) {
   return (
     <div className="flex items-center gap-4 bg-gray-3 w-[60%] p-4">
       <span className="text-gray-1">

@@ -1,12 +1,23 @@
 import { PlaylistSong } from "../types/index.t";
 
-export function markChangedSongs(orderedPlaylist: PlaylistSong[], unorderedPlaylist: PlaylistSong[]) {
-  const finalPlaylist = [...orderedPlaylist];
-  return finalPlaylist.map((orderedSong, index) => {
-    const unorderedSongIndex = unorderedPlaylist.findIndex((song) => song.id === orderedSong.id);
-    orderedSong.leftChanged = !!(unorderedPlaylist[unorderedSongIndex - 1] !== orderedPlaylist[index - 1]);
-    orderedSong.rightChanged = !!(unorderedPlaylist[unorderedSongIndex + 1] !== orderedPlaylist[index + 1]);
-    // if (orderedSong.leftChanged || orderedSong.rightChanged) orderedSong.rearranged = true;
+export function markChangedSongs(playlistSongs: PlaylistSong[]) {
+  const finalPlaylist = [...playlistSongs];
+
+  let realIndex = 0;
+  const indexStack: number[] = [];
+
+  return finalPlaylist.map((orderedSong) => {
+    orderedSong.rearranged = false;
+    while (indexStack.includes(realIndex)) {
+      indexStack.splice(indexStack.indexOf(realIndex), 1);
+      realIndex++;
+    }
+    if (orderedSong.index !== realIndex) {
+      indexStack.push(orderedSong.index);
+      orderedSong.rearranged = true;
+    } else {
+      realIndex++;
+    }
     return orderedSong;
   });
 }
