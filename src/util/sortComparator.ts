@@ -1,4 +1,4 @@
-import { PlaylistSong } from "../types/index.t";
+import { PlaylistSong } from "../types";
 
 export function sortComparator(playlistSongOne: PlaylistSong, playlistSongTwo: PlaylistSong) {
   const releaseDateOne = new Date(playlistSongOne.song.releaseDate);
@@ -8,7 +8,8 @@ export function sortComparator(playlistSongOne: PlaylistSong, playlistSongTwo: P
 
   const albumOne = playlistSongOne.song.album;
   const albumTwo = playlistSongTwo.song.album;
-  if (albumOne !== albumTwo) return 0;
+  if (albumOne < albumTwo) return -1;
+  if (albumOne > albumTwo) return 1;
 
   const albumTracknumberOne = playlistSongOne.song.trackNumber;
   const albumTracknumberTwo = playlistSongTwo.song.trackNumber;

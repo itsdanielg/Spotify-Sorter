@@ -1,4 +1,4 @@
-import { PlaylistSong, Song } from "../types/index.t";
+import { PlaylistSong, Song } from "../types";
 
 export const mockPlaylistSongs: PlaylistSong[] = [
   {

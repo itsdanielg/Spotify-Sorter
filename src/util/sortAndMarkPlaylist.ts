@@ -1,4 +1,4 @@
-import { PlaylistSong } from "../types/index.t";
+import { PlaylistSong } from "../types";
 import { markChangedSongs } from "./markChangedSongs";
 import { sortByRelease } from "./sortByRelease";
 

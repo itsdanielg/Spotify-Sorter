@@ -1,4 +1,4 @@
-import { PlaylistSong } from "../../types/index.t";
+import { PlaylistSong } from "../../types";
 import { DraggablePlaylistSongs } from "./DraggablePlaylistSongs";
 
 interface PlaylistViewProps {

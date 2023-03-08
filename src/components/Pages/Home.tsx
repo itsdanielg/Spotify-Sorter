@@ -1,5 +1,5 @@
 import { usePlaylists } from "../../api/Playlists/usePlaylists";
-import { Playlist } from "../../types/index.t";
+import { Playlist } from "../../types";
 import { Loading } from "../Atoms/Loading";
 import { PlaylistLink } from "../Atoms/PlaylistLink";
 

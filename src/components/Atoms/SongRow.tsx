@@ -1,4 +1,4 @@
-import { Song } from "../../types/index.t";
+import { Song } from "../../types";
 
 export interface SongRowProps {
   index: number;

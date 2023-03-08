@@ -1,4 +1,4 @@
-import { PlaylistSong } from "../types/index.t";
+import { PlaylistSong } from "../types";
 import { sortComparator } from "./sortComparator";
 
 export function sortByRelease(unorderedPlaylist: PlaylistSong[]): PlaylistSong[] {

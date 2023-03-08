@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { useEffect, useState } from "react";
-import { Playlist } from "../../types/index.t";
+import { Playlist } from "../../types";
 import { useToken } from "../useToken";
 import { fetchPlaylists } from "./fetchPlaylists";
 

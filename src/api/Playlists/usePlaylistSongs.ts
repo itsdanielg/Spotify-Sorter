@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { useEffect, useState } from "react";
-import { PlaylistSong, Song } from "../../types/index.t";
+import { PlaylistSong, Song } from "../../types";
 import { markChangedSongs } from "../../util/markChangedSongs";
 import { sortAndMarkPlaylist } from "../../util/sortAndMarkPlaylist";
 import { useToken } from "../useToken";

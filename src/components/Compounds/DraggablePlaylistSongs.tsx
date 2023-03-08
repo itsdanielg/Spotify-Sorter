@@ -1,5 +1,5 @@
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
-import { PlaylistSong } from "../../types/index.t";
+import { PlaylistSong } from "../../types";
 import { DraggableSongRow } from "./DraggableSongRow";
 
 export interface DraggablePlaylistSongsProps {

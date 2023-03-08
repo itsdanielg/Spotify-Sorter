@@ -1,4 +1,4 @@
-import { PlaylistSong } from "../types/index.t";
+import { PlaylistSong } from "../types";
 
 export function markChangedSongs(playlistSongs: PlaylistSong[]) {
   const finalPlaylist = [...playlistSongs];

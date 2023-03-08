@@ -1,4 +1,4 @@
-import { Song } from "../../types/index.t";
+import { Song } from "../../types";
 import { DraggableRow } from "../Atoms/DraggableRow";
 import { SongRow } from "../Atoms/SongRow";
 
