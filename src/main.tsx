@@ -5,8 +5,7 @@ import { App } from "./components/App";
 import "./index.css";
 
 localStorage.clear();
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
-root.render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <App />

@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import { mockPlaylistSongs } from "./mockPlaylistSongs";
 import { sortByRelease } from "./sortByRelease";
 
@@ -36,7 +37,7 @@ describe("sortByRelease", () => {
       mockPlaylistSongs[2],
       mockPlaylistSongs[0],
       mockPlaylistSongs[3],
-      mockPlaylistSongs[4],
+      mockPlaylistSongs[4]
     ];
     const orderedPlaylist = sortByRelease(unorderedPlaylist);
     expect(orderedPlaylist).toEqual(mockPlaylistSongs);

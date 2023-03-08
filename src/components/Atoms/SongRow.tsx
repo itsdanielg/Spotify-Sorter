@@ -9,7 +9,7 @@ export interface SongRowProps {
 export function SongRow({
   index,
   song: { title, artists, album, albumURL, releaseDate, dateAdded, timeAdded, trackNumber },
-  rearranged,
+  rearranged
 }: SongRowProps) {
   const background = rearranged ? "text-black bg-green-2 hover:bg-green-3" : "text-white-1 bg-gray-5 hover:bg-gray-6";
 

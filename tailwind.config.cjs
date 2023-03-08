@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -13,9 +13,9 @@ module.exports = {
         "gray-3": "#181818", // table header
         "gray-4": "#251b1c", // background
         "gray-5": "#2b292a", // playlist
-        "gray-6": "#4a4545", // playlist hover
-      },
-    },
+        "gray-6": "#4a4545" // playlist hover
+      }
+    }
   },
-  plugins: [],
+  plugins: []
 };

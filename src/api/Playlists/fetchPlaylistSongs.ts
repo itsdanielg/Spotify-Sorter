@@ -8,8 +8,8 @@ export async function fetchPlaylistSongs(token: string, playlistId: string): Pro
       .get(href, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       })
       .then(async (response) => {
         data.push(...response.data.items);
@@ -27,8 +27,8 @@ export async function fetchPlaylistSongs(token: string, playlistId: string): Pro
     .get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     })
     .then(async (response) => {
       const loopResponse = await getSongs(response.data.href);

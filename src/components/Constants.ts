@@ -5,18 +5,18 @@ const scopes = [
   "user-top-read",
   "user-modify-playback-state",
   "playlist-read-collaborative",
-  "playlist-read-private",
+  "playlist-read-private"
 ];
 
 const authURL =
-  process.env.REACT_APP_AUTH_ENDPOINT +
+  import.meta.env.VITE_AUTH_ENDPOINT +
   "?client_id=" +
-  process.env.REACT_APP_CLIENT_ID +
+  import.meta.env.VITE_CLIENT_ID +
   "&redirect_uri=" +
-  process.env.REACT_APP_REDIRECT_URI +
+  import.meta.env.VITE_REDIRECT_URI +
   "&scope=" +
   scopes.join("%20") +
   "&response_type=" +
-  process.env.REACT_APP_RESPONSE_TYPE;
+  import.meta.env.VITE_RESPONSE_TYPE;
 
 export { authURL };

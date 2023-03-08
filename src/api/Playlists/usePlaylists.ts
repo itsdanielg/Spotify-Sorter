@@ -22,7 +22,7 @@ export function usePlaylists() {
           id: playlist.id,
           name: playlist.name,
           imageURL: playlist.images[0]?.url ?? "",
-          songs: [],
+          songs: []
         } as Playlist;
       });
       setPlaylists(dataPlaylists);

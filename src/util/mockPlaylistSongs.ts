@@ -12,9 +12,9 @@ export const mockPlaylistSongs: PlaylistSong[] = [
       trackNumber: 1,
       releaseDate: "2022-01-01",
       dateAdded: "2022-01-01",
-      timeAdded: "2022-01-01",
+      timeAdded: "2022-01-01"
     } as unknown as Song,
-    rearranged: false,
+    rearranged: false
   },
   {
     id: "1",
@@ -27,9 +27,9 @@ export const mockPlaylistSongs: PlaylistSong[] = [
       trackNumber: 1,
       releaseDate: "2022-01-02",
       dateAdded: "2022-01-01",
-      timeAdded: "2022-01-01",
+      timeAdded: "2022-01-01"
     } as unknown as Song,
-    rearranged: false,
+    rearranged: false
   },
   {
     id: "2",
@@ -42,9 +42,9 @@ export const mockPlaylistSongs: PlaylistSong[] = [
       trackNumber: 1,
       releaseDate: "2022-01-02",
       dateAdded: "2022-01-01",
-      timeAdded: "2022-01-01",
+      timeAdded: "2022-01-01"
     } as unknown as Song,
-    rearranged: false,
+    rearranged: false
   },
   {
     id: "3",
@@ -57,9 +57,9 @@ export const mockPlaylistSongs: PlaylistSong[] = [
       trackNumber: 2,
       releaseDate: "2022-01-02",
       dateAdded: "2022-01-01",
-      timeAdded: "2022-01-01",
+      timeAdded: "2022-01-01"
     } as unknown as Song,
-    rearranged: false,
+    rearranged: false
   },
   {
     id: "4",
@@ -72,8 +72,8 @@ export const mockPlaylistSongs: PlaylistSong[] = [
       trackNumber: 2,
       releaseDate: "2022-01-02",
       dateAdded: "2022-01-01",
-      timeAdded: "2022-01-01",
+      timeAdded: "2022-01-01"
     } as unknown as Song,
-    rearranged: false,
-  },
+    rearranged: false
+  }
 ];
