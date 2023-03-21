@@ -7,7 +7,7 @@ import { fetchPlaylists } from "./fetchPlaylists";
 
 export function usePlaylists() {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
-  const [token] = useToken();
+  const { token } = useToken();
 
   useEffect(() => {
     const getPlaylists = async () => {

@@ -3,16 +3,10 @@ import { Link } from "react-router-dom";
 import { Button } from "../Atoms/Button";
 
 interface NavBarProps {
-  setToken: Dispatch<SetStateAction<string>>;
+  removeToken: () => void;
 }
 
-export function NavBar({ setToken }: NavBarProps) {
-  const logout = () => {
-    setToken("");
-    window.localStorage.removeItem("token");
-    window.location.href = "/";
-  };
-
+export function NavBar({ removeToken }: NavBarProps) {
   return (
     <div className="w-full bg-black flex items-center justify-between gap-4 p-5">
       <span className="text-white-1 text-4xl grow">Welcome Daniel!</span>
@@ -26,7 +20,7 @@ export function NavBar({ setToken }: NavBarProps) {
       <div>
         <Button
           label="Log Out"
-          onClick={() => logout()}
+          onClick={() => removeToken()}
         />
       </div>
     </div>

@@ -2,10 +2,16 @@
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-export function useToken(): [string, Dispatch<SetStateAction<string>>] {
+export function useToken(): { token: string; removeToken: () => void } {
   const [token, setToken] = useState(() => {
     return window.localStorage.getItem("token") ?? "";
   });
+
+  const removeToken = () => {
+    setToken("");
+    window.localStorage.removeItem("token");
+    window.location.href = "/";
+  };
 
   useEffect(() => {
     const hash: string = window.location.hash;
@@ -22,5 +28,5 @@ export function useToken(): [string, Dispatch<SetStateAction<string>>] {
     }
   }, []);
 
-  return [token, setToken];
+  return { token, removeToken };
 }
