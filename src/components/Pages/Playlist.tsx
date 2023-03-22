@@ -4,9 +4,9 @@ import { Loading } from "../Atoms/Loading";
 import { PlaylistEditBar } from "../Compounds/PlaylistEditBar";
 import { PlaylistView } from "../Compounds/PlaylistView";
 
-export function PlaylistPage() {
+export function Playlist() {
   const location = useLocation();
-  const { playlistSongs, loading, isChanged, moveSong, sortPlaylist, resetChanges } = usePlaylistSongs(
+  const { playlistSongs, loading, isChanged, moveSong, sortPlaylist, resetChanges, saveChanges } = usePlaylistSongs(
     location.pathname.substring(1)
   );
 
@@ -18,6 +18,7 @@ export function PlaylistPage() {
         isChanged={isChanged}
         sortPlaylist={sortPlaylist}
         resetChanges={resetChanges}
+        saveChanges={saveChanges}
         loading={loading}
       />
       <PlaylistView

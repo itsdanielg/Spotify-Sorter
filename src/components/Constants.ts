@@ -5,7 +5,9 @@ const scopes = [
   "user-top-read",
   "user-modify-playback-state",
   "playlist-read-collaborative",
-  "playlist-read-private"
+  "playlist-read-private",
+  "playlist-modify-private",
+  "playlist-modify-public"
 ];
 
 const authURL =

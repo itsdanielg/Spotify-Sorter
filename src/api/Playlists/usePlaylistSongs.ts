@@ -4,11 +4,14 @@ import { useEffect, useState } from "react";
 import { PlaylistSong, Song } from "../../types";
 import { markChangedSongs } from "../../util/markChangedSongs";
 import { sortAndMarkPlaylist } from "../../util/sortAndMarkPlaylist";
+import { unmarkSongs } from "../../util/unmarkSongs";
 import { useToken } from "../useToken";
 import { fetchPlaylistSongs } from "./fetchPlaylistSongs";
+import { updatePlaylist } from "./updatePlaylist";
+import { updatePlaylistSong } from "./updatePlaylistSong";
 
 export function usePlaylistSongs(playlistId: string) {
-  const [token] = useToken();
+  const { token } = useToken();
 
   const [playlistSongs, setPlaylist] = useState<PlaylistSong[]>([]);
   const [unorderedPlaylistSongs, setUnorderedPlaylistSongs] = useState<PlaylistSong[]>([]);
@@ -42,11 +45,14 @@ export function usePlaylistSongs(playlistId: string) {
   };
 
   const saveChanges = async () => {
-    const { data, error } = await fetchPlaylistSongs(token, playlistId);
-    if (error || !data) {
+    const { data, error } = await updatePlaylist(token, playlistId, unorderedPlaylistSongs, playlistSongs);
+    if (error) {
       return;
     }
-    setUnorderedPlaylistSongs(playlistSongs);
+    // const newPlaylistSongs = unmarkSongs(playlistSongs);
+    // setPlaylist(newPlaylistSongs);
+    // setUnorderedPlaylistSongs(newPlaylistSongs);
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -67,6 +73,8 @@ export function usePlaylistSongs(playlistId: string) {
         return;
       }
       const dataPlaylistSongs = data.map((playlistSong: any, index: number) => {
+        console.log(playlistSong);
+
         return {
           id: playlistSong.track.id,
           index: index,
@@ -89,5 +97,5 @@ export function usePlaylistSongs(playlistId: string) {
     getPlaylist();
   }, []);
 
-  return { playlistSongs, isChanged, loading, moveSong, sortPlaylist, resetChanges };
+  return { playlistSongs, isChanged, loading, moveSong, sortPlaylist, resetChanges, saveChanges };
 }

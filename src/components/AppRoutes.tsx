@@ -1,6 +1,6 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Home } from "./Pages/Home";
-import { PlaylistPage } from "./Pages/PlaylistPage";
+import { Playlist } from "./Pages/Playlist";
 
 export function AppRoutes() {
   return (
@@ -11,7 +11,7 @@ export function AppRoutes() {
       />
       <Route
         path=":id"
-        element={<PlaylistPage />}
+        element={<Playlist />}
       />
     </Routes>
   );
