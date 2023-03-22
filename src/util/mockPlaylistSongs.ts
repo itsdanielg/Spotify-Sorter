@@ -1,10 +1,10 @@
-import { PlaylistSong, Song } from "../types";
+import { PlaylistTrack, Track } from "../types";
 
-export const mockPlaylistSongs: PlaylistSong[] = [
+export const mockPlaylistSongs: PlaylistTrack[] = [
   {
     id: "0",
     index: 0,
-    song: {
+    track: {
       title: "title",
       artists: ["artist"],
       album: "album one",
@@ -13,13 +13,13 @@ export const mockPlaylistSongs: PlaylistSong[] = [
       releaseDate: "2022-01-01",
       dateAdded: "2022-01-01",
       timeAdded: "2022-01-01"
-    } as unknown as Song,
+    } as unknown as Track,
     rearranged: false
   },
   {
     id: "1",
     index: 1,
-    song: {
+    track: {
       title: "title",
       artists: ["artist"],
       album: "album one",
@@ -28,13 +28,13 @@ export const mockPlaylistSongs: PlaylistSong[] = [
       releaseDate: "2022-01-02",
       dateAdded: "2022-01-01",
       timeAdded: "2022-01-01"
-    } as unknown as Song,
+    } as unknown as Track,
     rearranged: false
   },
   {
     id: "2",
     index: 2,
-    song: {
+    track: {
       title: "title",
       artists: ["artist"],
       album: "album two",
@@ -43,13 +43,13 @@ export const mockPlaylistSongs: PlaylistSong[] = [
       releaseDate: "2022-01-02",
       dateAdded: "2022-01-01",
       timeAdded: "2022-01-01"
-    } as unknown as Song,
+    } as unknown as Track,
     rearranged: false
   },
   {
     id: "3",
     index: 3,
-    song: {
+    track: {
       title: "title",
       artists: ["artist"],
       album: "album two",
@@ -58,13 +58,13 @@ export const mockPlaylistSongs: PlaylistSong[] = [
       releaseDate: "2022-01-02",
       dateAdded: "2022-01-01",
       timeAdded: "2022-01-01"
-    } as unknown as Song,
+    } as unknown as Track,
     rearranged: false
   },
   {
     id: "4",
     index: 4,
-    song: {
+    track: {
       title: "title",
       artists: ["artist"],
       album: "album two",
@@ -73,7 +73,7 @@ export const mockPlaylistSongs: PlaylistSong[] = [
       releaseDate: "2022-01-02",
       dateAdded: "2022-01-01",
       timeAdded: "2022-01-01"
-    } as unknown as Song,
+    } as unknown as Track,
     rearranged: false
   }
 ];

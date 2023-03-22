@@ -2,17 +2,20 @@ type Playlist = {
   id: string;
   name: string;
   imageURL: string;
-  songs: Song[];
+  owner: string;
+  description: string;
+  collaborative: boolean;
+  public: boolean;
 };
 
-type PlaylistSong = {
+type PlaylistTrack = {
   id: string;
   index: number;
-  song: Song;
+  track: Track;
   rearranged: boolean;
 };
 
-type Song = {
+type Track = {
   title: string;
   artists: string[];
   album: string;
@@ -23,4 +26,4 @@ type Song = {
   timeAdded: string;
 };
 
-export type { Playlist, PlaylistSong, Song };
+export type { Playlist, PlaylistTrack, Track };

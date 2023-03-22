@@ -1,14 +1,15 @@
-import { Song } from "../../types";
+import { Track } from "../../../types";
+import { AlbumCover } from "../../Compounds/AlbumCover";
 
 export interface SongRowProps {
   index: number;
-  song: Song;
+  track: Track;
   rearranged: boolean;
 }
 
 export function SongRow({
   index,
-  song: { title, artists, album, albumURL, releaseDate, dateAdded, timeAdded, trackNumber },
+  track: { title, artists, album, albumURL, releaseDate, dateAdded, timeAdded, trackNumber },
   rearranged
 }: SongRowProps) {
   const background = rearranged ? "text-black bg-green-2 hover:bg-green-3" : "text-white-1 bg-gray-5 hover:bg-gray-6";
@@ -18,10 +19,9 @@ export function SongRow({
       <span className="w-[5%] text-center">{index + 1}</span>
       <span className="w-[10%] text-center">{releaseDate}</span>
       <span className="w-[5%] p-2">
-        <img
-          className="w-full h-full"
+        <AlbumCover
           src={albumURL}
-          alt="404"
+          width="w-full"
         />
       </span>
       <span className="w-[30%]">{title}</span>

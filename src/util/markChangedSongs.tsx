@@ -1,7 +1,7 @@
-import { PlaylistSong } from "../types";
+import { PlaylistTrack } from "../types";
 
-export function markChangedSongs(playlistSongs: PlaylistSong[]) {
-  const finalPlaylist = [...playlistSongs];
+export function markChangedSongs(playlist: PlaylistTrack[]) {
+  const finalPlaylist = [...playlist];
 
   let realIndex = 0;
   const indexStack: number[] = [];

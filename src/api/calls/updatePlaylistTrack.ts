@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function updatePlaylistSong(
+export async function updatePlaylistTrack(
   token: string,
   playlistId: string,
   startIndex: number,

@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { Playlist } from "../../types";
-import { useToken } from "../useToken";
-import { fetchPlaylists } from "./fetchPlaylists";
+import { fetchPlaylists } from "../calls/fetchPlaylists";
+import { useToken } from "./useToken";
 
 export function usePlaylists() {
-  const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const { token } = useToken();
+
+  const [playlists, setPlaylists] = useState<Playlist[]>([]);
 
   useEffect(() => {
     const getPlaylists = async () => {
@@ -22,7 +23,10 @@ export function usePlaylists() {
           id: playlist.id,
           name: playlist.name,
           imageURL: playlist.images[0]?.url ?? "",
-          songs: []
+          owner: playlist.owner.display_name,
+          description: playlist.description,
+          collaborative: playlist.collaborative,
+          public: playlist.public
         } as Playlist;
       });
       setPlaylists(dataPlaylists);

@@ -1,12 +1,12 @@
-import { PlaylistSong } from "../../types";
+import { PlaylistTrack } from "../../../types";
 import { DraggablePlaylistSongs } from "./DraggablePlaylistSongs";
 
 interface PlaylistViewProps {
-  playlistSongs: PlaylistSong[];
-  moveSong: (sourceIndex: number, destinationIndex: number) => void;
+  playlist: PlaylistTrack[];
+  moveTrack: (sourceIndex: number, destinationIndex: number) => void;
 }
 
-export function PlaylistView({ playlistSongs, moveSong }: PlaylistViewProps) {
+export function PlaylistView({ playlist, moveTrack }: PlaylistViewProps) {
   return (
     <div className="flex flex-col items-center gap-2 w-5/6">
       <div className="sticky top-0 flex items-center w-full rounded-md bg-gray-3 text-white-1 [&>*]:p-4">
@@ -19,8 +19,8 @@ export function PlaylistView({ playlistSongs, moveSong }: PlaylistViewProps) {
         <span className="w-[10%] text-center">Date Added</span>
       </div>
       <DraggablePlaylistSongs
-        playlistSongs={playlistSongs}
-        moveSong={moveSong}
+        playlistSongs={playlist}
+        moveTrack={moveTrack}
       />
     </div>
   );

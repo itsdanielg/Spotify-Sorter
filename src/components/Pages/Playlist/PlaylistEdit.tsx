@@ -1,23 +1,23 @@
-import { Button } from "../Atoms/Button";
-import { Loading } from "../Atoms/Loading";
+import { Button } from "../../Atoms/Button";
+import { LoadingAnimation } from "../../Atoms/LoadingAnimation";
 
-export interface PlaylistEditBarProps {
+export interface PlaylistEditProps {
   totalTracks: number;
-  loading: boolean;
-  isChanged: boolean;
+  isLoading: boolean;
+  isModified: boolean;
   sortPlaylist: () => void;
-  resetChanges: () => void;
+  cancelChanges: () => void;
   saveChanges: () => void;
 }
 
-export function PlaylistEditBar({
+export function PlaylistEdit({
   totalTracks,
-  loading,
-  isChanged,
+  isLoading,
+  isModified,
   sortPlaylist,
-  resetChanges,
+  cancelChanges,
   saveChanges
-}: PlaylistEditBarProps) {
+}: PlaylistEditProps) {
   return (
     <div className="flex items-center gap-4 bg-gray-3 w-[60%] p-4">
       <span className="text-gray-1">
@@ -30,15 +30,19 @@ export function PlaylistEditBar({
       />
       <Button
         label="Cancel Changes"
-        disabled={!isChanged}
-        onClick={() => resetChanges()}
+        disabled={!isModified}
+        onClick={() => cancelChanges()}
       />
       <Button
         label="Save Changes"
-        disabled={!isChanged}
+        disabled={!isModified}
         onClick={() => saveChanges()}
       />
-      {loading && <Loading />}
+      {isLoading && (
+        <div className="w-12 ml-auto">
+          <LoadingAnimation width="w-full" />
+        </div>
+      )}
     </div>
   );
 }

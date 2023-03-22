@@ -1,7 +1,7 @@
-import { PlaylistSong } from "../types";
+import { PlaylistTrack } from "../types";
 import { sortComparator } from "./sortComparator";
 
-export function sortByRelease(unorderedPlaylist: PlaylistSong[]): PlaylistSong[] {
+export function sortByRelease(unorderedPlaylist: PlaylistTrack[]): PlaylistTrack[] {
   const orderedPlaylist = [...unorderedPlaylist];
   orderedPlaylist.sort(sortComparator);
   return orderedPlaylist;

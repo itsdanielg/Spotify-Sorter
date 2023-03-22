@@ -1,7 +1,7 @@
-import { usePlaylists } from "../../api/Playlists/usePlaylists";
-import { Playlist } from "../../types";
-import { Loading } from "../Atoms/Loading";
-import { PlaylistLink } from "../Atoms/PlaylistLink";
+import { usePlaylists } from "../../../api/hooks/usePlaylists";
+import { Playlist } from "../../../types";
+import { PlaylistLink } from "./PlaylistLink";
+import { Loading } from "../Loading";
 
 export function Home() {
   const playlists: Playlist[] = usePlaylists();
