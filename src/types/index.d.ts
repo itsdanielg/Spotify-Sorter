@@ -5,7 +5,7 @@ type Playlist = {
   owner: string;
   description: string;
   collaborative: boolean;
-  public: boolean;
+  isPublic: boolean;
 };
 
 type PlaylistTrack = {

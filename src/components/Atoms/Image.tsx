@@ -11,7 +11,7 @@ export function Image({ src, alt, className = "", ...props }: ImageProps) {
     <img
       {...props}
       className={`${className} w-full h-full select-none`}
-      src={src ?? sampleURL}
+      src={src ? src : sampleURL}
       alt={alt}
     />
   );

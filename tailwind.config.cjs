@@ -13,7 +13,8 @@ module.exports = {
         "gray-3": "#181818", // table header
         "gray-4": "#251b1c", // background
         "gray-5": "#2b292a", // playlist
-        "gray-6": "#4a4545" // playlist hover
+        "gray-6": "#4a4545", // playlist hover
+        "gray-7": "rgba(74, 69, 69, 0.8)" // playlist hover, opacity
       }
     }
   },

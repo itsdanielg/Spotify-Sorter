@@ -26,7 +26,7 @@ export function usePlaylists() {
           owner: playlist.owner.display_name,
           description: playlist.description,
           collaborative: playlist.collaborative,
-          public: playlist.public
+          isPublic: playlist.public
         } as Playlist;
       });
       setPlaylists(dataPlaylists);
