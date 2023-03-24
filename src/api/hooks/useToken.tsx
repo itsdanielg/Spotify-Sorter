@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 
 export function useToken(): { token: string; removeToken: () => void } {
   const [token, setToken] = useState(() => {
-    return window.localStorage.getItem("token") ?? "";
+    return window.sessionStorage.getItem("token") ?? "";
   });
 
   const removeToken = () => {
     setToken("");
-    window.localStorage.removeItem("token");
+    window.sessionStorage.removeItem("token");
     window.location.href = "/";
   };
 
@@ -23,7 +23,7 @@ export function useToken(): { token: string; removeToken: () => void } {
         .find((elem) => elem.startsWith("access_token"))
         ?.split("=")[1];
       window.location.hash = "";
-      window.localStorage.setItem("token", newToken as string);
+      window.sessionStorage.setItem("token", newToken as string);
       setToken(newToken as string);
     }
   }, []);
