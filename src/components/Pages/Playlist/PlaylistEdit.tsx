@@ -5,7 +5,7 @@ export interface PlaylistEditProps {
   totalTracks: number;
   isLoading: boolean;
   isModified: boolean;
-  sortPlaylist: () => void;
+  // sortPlaylist: () => void;
   cancelChanges: () => void;
   saveChanges: () => void;
 }
@@ -14,7 +14,7 @@ export function PlaylistEdit({
   totalTracks,
   isLoading,
   isModified,
-  sortPlaylist,
+  // sortPlaylist,
   cancelChanges,
   saveChanges
 }: PlaylistEditProps) {
@@ -24,10 +24,10 @@ export function PlaylistEdit({
         Total Tracks:
         <span className="font-bold">{` ${totalTracks}`}</span>
       </span>
-      <Button
+      {/* <Button
         label="Sort By Release Date"
         onClick={() => sortPlaylist()}
-      />
+      /> */}
       <Button
         label="Cancel Changes"
         disabled={!isModified}

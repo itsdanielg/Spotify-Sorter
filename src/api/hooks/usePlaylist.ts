@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { PlaylistTrack, Track } from "../../types";
+import { getSortedPlaylist } from "../../util/getSortedPlaylist";
 import { markChangedSongs } from "../../util/markChangedSongs";
-import { sortAndMarkPlaylist } from "../../util/sortAndMarkPlaylist";
 import { unmarkSongs } from "../../util/unmarkSongs";
 import { fetchPlaylist } from "../calls/fetchPlaylist";
 import { updatePlaylist } from "../calls/updatePlaylist";
@@ -25,15 +25,12 @@ export function usePlaylist(playlistId: string) {
     setPlaylist(finalPlaylist);
   };
 
-  const sortPlaylist = async () => {
+  const sortPlaylist = async (field: string) => {
     setIsLoading(true);
-    const { sortedPlaylist, error } = await sortAndMarkPlaylist(playlist);
-    if (error) {
-      return;
-    } else if (sortedPlaylist) {
-      setPlaylist(sortedPlaylist);
-      setIsLoading(false);
-    }
+    const sortedPlaylist = getSortedPlaylist(playlist, field);
+    markChangedSongs(sortedPlaylist);
+    setPlaylist(sortedPlaylist);
+    setIsLoading(false);
   };
 
   const cancelChanges = () => {

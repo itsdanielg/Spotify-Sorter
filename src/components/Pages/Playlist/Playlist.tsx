@@ -17,12 +17,13 @@ export function Playlist() {
         totalTracks={playlist.length}
         isLoading={isLoading}
         isModified={isModified}
-        sortPlaylist={sortPlaylist}
+        // sortPlaylist={sortPlaylist}
         cancelChanges={cancelChanges}
         saveChanges={saveChanges}
       />
       <PlaylistView
         playlist={playlist}
+        sortPlaylist={sortPlaylist}
         moveTrack={moveTrack}
       />
     </div>
