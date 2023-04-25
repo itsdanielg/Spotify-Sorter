@@ -1,12 +1,11 @@
-import { Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "../Atoms/Button";
+import { Button } from "../../Atoms/Button";
 
-interface NavBarProps {
+interface NavigationProps {
   removeToken: () => void;
 }
 
-export function NavBar({ removeToken }: NavBarProps) {
+export function Navigation({ removeToken }: NavigationProps) {
   return (
     <div className="w-full bg-black flex items-center justify-between gap-4 p-5">
       <span className="text-white-1 text-4xl grow">Welcome Daniel!</span>

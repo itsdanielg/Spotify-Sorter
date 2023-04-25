@@ -1,25 +1,36 @@
 import { Track } from "../../../types";
 import { DraggableRow } from "../../Compounds/DraggableRow";
-import { SongRow } from "./SongRow";
+import { PlaylistTrack } from "./PlaylistTrack";
+import { PlaylistTrackCompact } from "./PlaylistTrackCompact";
 
 export interface DraggablePlaylistTrackProps {
   id: string;
   index: number;
   track: Track;
+  isCompact: boolean;
   rearranged: boolean;
 }
 
-export function DraggablePlaylistTrack({ id, index, track, rearranged }: DraggablePlaylistTrackProps) {
+export function DraggablePlaylistTrack({ id, index, track, isCompact, rearranged }: DraggablePlaylistTrackProps) {
   return (
     <DraggableRow
       draggableId={id}
       index={index}>
-      <SongRow
-        key={id}
-        index={index}
-        track={track}
-        rearranged={!!rearranged}
-      />
+      {isCompact ? (
+        <PlaylistTrackCompact
+          key={id}
+          index={index}
+          track={track}
+          rearranged={!!rearranged}
+        />
+      ) : (
+        <PlaylistTrack
+          key={id}
+          index={index}
+          track={track}
+          rearranged={!!rearranged}
+        />
+      )}
     </DraggableRow>
   );
 }

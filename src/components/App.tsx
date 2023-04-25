@@ -1,6 +1,6 @@
 import { useToken } from "../api/hooks/useToken";
 import { Login } from "./Pages/Login";
-import { NavBar } from "./Compounds/NavBar";
+import { Navigation } from "./Pages/Navigation/";
 import { AppRoutes } from "./AppRoutes";
 
 export function App() {
@@ -9,7 +9,7 @@ export function App() {
   if (!token) return <Login />;
   return (
     <div className="w-full h-screen flex flex-col bg-gray-2 font-montserrat">
-      <NavBar removeToken={removeToken} />
+      <Navigation removeToken={removeToken} />
       <div className="w-full h-full overflow-y-auto overflow-x-hidden">
         <AppRoutes />
       </div>

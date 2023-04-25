@@ -1,11 +1,14 @@
+import { Dispatch, SetStateAction } from "react";
 import { Button } from "../../Atoms/Button";
 import { LoadingAnimation } from "../../Atoms/LoadingAnimation";
+import { LabeledToggle } from "../../Compounds/LabeledToggle";
 
 export interface PlaylistEditProps {
   totalTracks: number;
   isLoading: boolean;
   isModified: boolean;
-  // sortPlaylist: () => void;
+  isCompact: boolean;
+  setIsCompact: Dispatch<SetStateAction<boolean>>;
   cancelChanges: () => void;
   saveChanges: () => void;
 }
@@ -14,7 +17,8 @@ export function PlaylistEdit({
   totalTracks,
   isLoading,
   isModified,
-  // sortPlaylist,
+  isCompact,
+  setIsCompact,
   cancelChanges,
   saveChanges
 }: PlaylistEditProps) {
@@ -24,10 +28,6 @@ export function PlaylistEdit({
         Total Tracks:
         <span className="font-bold">{` ${totalTracks}`}</span>
       </span>
-      {/* <Button
-        label="Sort By Release Date"
-        onClick={() => sortPlaylist()}
-      /> */}
       <Button
         label="Cancel Changes"
         disabled={!isModified}
@@ -37,6 +37,11 @@ export function PlaylistEdit({
         label="Save Changes"
         disabled={!isModified}
         onClick={() => saveChanges()}
+      />
+      <LabeledToggle
+        label="Compact View"
+        checked={isCompact}
+        setChecked={setIsCompact}
       />
       {isLoading && (
         <div className="w-12 ml-auto">

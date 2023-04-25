@@ -4,10 +4,11 @@ import { DraggablePlaylistTrack } from "./DraggablePlaylistTrack";
 
 export interface DraggablePlaylistSongsProps {
   playlistSongs: PlaylistTrack[];
+  isCompact: boolean;
   moveTrack: (sourceIndex: number, destinationIndex: number) => void;
 }
 
-export function DraggablePlaylistSongs({ playlistSongs, moveTrack }: DraggablePlaylistSongsProps) {
+export function DraggablePlaylistSongs({ playlistSongs, isCompact, moveTrack }: DraggablePlaylistSongsProps) {
   const handleOnDragEnd = (draggedCard: DropResult) => {
     if (!draggedCard.destination) return;
     if (draggedCard.source.index === draggedCard.destination.index) return;
@@ -21,13 +22,14 @@ export function DraggablePlaylistSongs({ playlistSongs, moveTrack }: DraggablePl
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className="flex flex-col items-center">
+            className="flex flex-col items-center w-full">
             {playlistSongs.map(({ id, index, track, rearranged }) => (
               <DraggablePlaylistTrack
                 key={id}
                 id={id}
                 index={index}
                 track={track}
+                isCompact={isCompact}
                 rearranged={!!rearranged}
               />
             ))}

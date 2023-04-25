@@ -3,8 +3,11 @@ import { usePlaylist } from "../../../api/hooks/usePlaylist";
 import { PlaylistEdit } from "./PlaylistEdit";
 import { PlaylistView } from "./PlaylistView";
 import { Loading } from "../Loading";
+import { useState } from "react";
 
 export function Playlist() {
+  const [isCompact, setIsCompact] = useState(false);
+
   const location = useLocation();
   const { playlist, isLoading, isModified, moveTrack, sortPlaylist, cancelChanges, saveChanges } = usePlaylist(
     location.pathname.substring(1)
@@ -17,12 +20,14 @@ export function Playlist() {
         totalTracks={playlist.length}
         isLoading={isLoading}
         isModified={isModified}
-        // sortPlaylist={sortPlaylist}
         cancelChanges={cancelChanges}
         saveChanges={saveChanges}
+        isCompact={isCompact}
+        setIsCompact={setIsCompact}
       />
       <PlaylistView
         playlist={playlist}
+        isCompact={isCompact}
         sortPlaylist={sortPlaylist}
         moveTrack={moveTrack}
       />
