@@ -68,6 +68,7 @@ export function usePlaylist(playlistId: string) {
       const { data, error } = await fetchPlaylist(token, playlistId);
       if (error || !data) {
         setPlaylist([]);
+        setIsLoading(false);
         return;
       }
       const dataPlaylist = data.map((playlistTrack: any, index: number) => {

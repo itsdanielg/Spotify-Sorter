@@ -1,5 +1,4 @@
 import { Track } from "../../../types";
-import { AlbumCover } from "../../Compounds/AlbumCover";
 
 export interface PlaylistTrackCompactProps {
   index: number;
@@ -9,7 +8,7 @@ export interface PlaylistTrackCompactProps {
 
 export function PlaylistTrackCompact({
   index,
-  track: { title, artists, album, albumURL, releaseDate, dateAdded, timeAdded, trackNumber },
+  track: { title, artists, album, releaseDate, dateAdded, timeAdded, trackNumber },
   rearranged
 }: PlaylistTrackCompactProps) {
   const background = rearranged ? "text-black bg-green-2 hover:bg-green-3" : "text-white-1 bg-gray-5 hover:bg-gray-6";

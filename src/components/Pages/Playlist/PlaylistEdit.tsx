@@ -1,11 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
 import { Button } from "../../Atoms/Button";
-import { LoadingAnimation } from "../../Atoms/LoadingAnimation";
 import { LabeledToggle } from "../../Compounds/LabeledToggle";
 
 export interface PlaylistEditProps {
   totalTracks: number;
-  isLoading: boolean;
+  currentSort: string;
   isModified: boolean;
   isCompact: boolean;
   setIsCompact: Dispatch<SetStateAction<boolean>>;
@@ -15,7 +14,7 @@ export interface PlaylistEditProps {
 
 export function PlaylistEdit({
   totalTracks,
-  isLoading,
+  currentSort,
   isModified,
   isCompact,
   setIsCompact,
@@ -23,31 +22,38 @@ export function PlaylistEdit({
   saveChanges
 }: PlaylistEditProps) {
   return (
-    <div className="flex items-center gap-4 bg-gray-3 w-[60%] p-4">
-      <span className="text-gray-1">
-        Total Tracks:
-        <span className="font-bold">{` ${totalTracks}`}</span>
-      </span>
-      <Button
-        label="Cancel Changes"
-        disabled={!isModified}
-        onClick={() => cancelChanges()}
-      />
-      <Button
-        label="Save Changes"
-        disabled={!isModified}
-        onClick={() => saveChanges()}
-      />
-      <LabeledToggle
-        label="Compact View"
-        checked={isCompact}
-        setChecked={setIsCompact}
-      />
-      {isLoading && (
-        <div className="w-12 ml-auto">
-          <LoadingAnimation width="w-full" />
+    <div className="flex gap-4 bg-gray-3 w-[60%] p-4">
+      <div className="flex flex-col gap-4">
+        <div className="flex gap-8">
+          <span className="text-white-1">
+            Total Tracks:
+            <span className="font-bold text-green-1">{` ${totalTracks}`}</span>
+          </span>
+          <span className="text-white-1">
+            Current Sort:
+            <span className="font-bold text-green-1">{` ${currentSort}`}</span>
+          </span>
         </div>
-      )}
+        <div className="flex gap-2">
+          <LabeledToggle
+            label="Compact View"
+            checked={isCompact}
+            setChecked={setIsCompact}
+          />
+        </div>
+      </div>
+      <div className="flex gap-2 ml-auto">
+        <Button
+          label="Cancel Changes"
+          disabled={!isModified}
+          onClick={() => cancelChanges()}
+        />
+        <Button
+          label="Save Changes"
+          disabled={!isModified}
+          onClick={() => saveChanges()}
+        />
+      </div>
     </div>
   );
 }
