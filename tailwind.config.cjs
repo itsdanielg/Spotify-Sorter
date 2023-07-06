@@ -3,6 +3,15 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      animation: {
+        fade: "fadeOut 0.5s 2.6s"
+      },
+      keyframes: () => ({
+        fadeOut: {
+          "0%": { opacity: 1 },
+          "100%": { opacity: 0 }
+        }
+      }),
       colors: {
         "green-1": "#49d667",
         "green-2": "#3fb85a",

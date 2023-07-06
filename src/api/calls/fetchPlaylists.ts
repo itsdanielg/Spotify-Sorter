@@ -1,6 +1,7 @@
 import axios from "axios";
+import { APIReturn } from "../../types";
 
-export async function fetchPlaylists(token: string): Promise<{ data: any; error: boolean }> {
+export async function fetchPlaylists(token: string): Promise<APIReturn> {
   const data: any = [];
 
   const getPlaylists = async (href: string) => {

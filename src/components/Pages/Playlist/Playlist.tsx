@@ -12,29 +12,22 @@ export function Playlist() {
   const [currentSort, setCurrentSort] = useState("");
 
   const location = useLocation();
-  const { playlist, isLoading, isModified, moveTrack, sortPlaylist, cancelChanges, saveChanges } = usePlaylist(
-    location.pathname.substring(1)
-  );
+  const { playlist, isLoading, isError, isModified, isSaving, moveTrack, sortPlaylist, cancelChanges, saveChanges } =
+    usePlaylist(location.pathname.substring(1));
 
   if (isLoading) return <Loading />;
-  if (!isLoading && playlist.length === 0) return <ErrorPage />;
+  if (!isLoading && isError) return <ErrorPage />;
 
   return (
-    <div className="relative flex flex-col items-center md:p-8 gap-8">
-      {isLoading && (
-        <div className="w-12">
-          <LoadingAnimation width="w-full" />
-        </div>
-      )}
+    <div className="relative flex flex-col items-center p-4 md:p-8 gap-4 md:gap-8">
       <PlaylistEdit
         totalTracks={playlist.length}
         currentSort={currentSort}
+        isSaving={isSaving}
         isModified={isModified}
-        cancelChanges={() => {
-          setCurrentSort("");
-          cancelChanges();
-        }}
+        cancelChanges={cancelChanges}
         saveChanges={saveChanges}
+        setCurrentSort={setCurrentSort}
         isCompact={isCompact}
         setIsCompact={setIsCompact}
       />
@@ -42,8 +35,8 @@ export function Playlist() {
         setCurrentSort={setCurrentSort}
         playlist={playlist}
         isCompact={isCompact}
-        sortPlaylist={sortPlaylist}
         moveTrack={moveTrack}
+        sortPlaylist={sortPlaylist}
       />
     </div>
   );

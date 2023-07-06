@@ -1,3 +1,11 @@
+type APIResponse = 200 | 401 | 403 | 404 | 429;
+
+type APIReturn = {
+  data: any;
+  error: boolean;
+  response?: APIResponse;
+};
+
 type Playlist = {
   id: string;
   name: string;
@@ -26,4 +34,4 @@ type Track = {
   timeAdded: string;
 };
 
-export type { Playlist, PlaylistTrack, Track };
+export type { APIReturn, Playlist, PlaylistTrack, Track };

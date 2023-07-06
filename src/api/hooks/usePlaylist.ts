@@ -15,22 +15,22 @@ export function usePlaylist(playlistId: string) {
   const [playlist, setPlaylist] = useState<PlaylistTrack[]>([]);
   const [unorderedPlaylist, setUnorderedPlaylist] = useState<PlaylistTrack[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [isModified, setIsModified] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const moveTrack = (sourceIndex: number, destinationIndex: number) => {
     const newPlaylist = [...playlist];
     const [track] = newPlaylist.splice(sourceIndex, 1);
     newPlaylist.splice(destinationIndex, 0, track);
-    const finalPlaylist = markChangedSongs(newPlaylist);
-    setPlaylist(finalPlaylist);
+    markChangedSongs(newPlaylist);
+    setPlaylist(newPlaylist);
   };
 
   const sortPlaylist = async (field: string) => {
-    setIsLoading(true);
     const sortedPlaylist = getSortedPlaylist(playlist, field);
     markChangedSongs(sortedPlaylist);
     setPlaylist(sortedPlaylist);
-    setIsLoading(false);
   };
 
   const cancelChanges = () => {
@@ -42,7 +42,7 @@ export function usePlaylist(playlistId: string) {
   };
 
   const saveChanges = async () => {
-    setIsLoading(true);
+    setIsSaving(true);
     const { data, error } = await updatePlaylist(token, playlistId, unorderedPlaylist, playlist);
     if (error) {
       return;
@@ -50,7 +50,7 @@ export function usePlaylist(playlistId: string) {
     const newPlaylist = unmarkSongs(playlist);
     setPlaylist(newPlaylist);
     setUnorderedPlaylist(newPlaylist);
-    setIsLoading(false);
+    setIsSaving(false);
   };
 
   useEffect(() => {
@@ -66,9 +66,10 @@ export function usePlaylist(playlistId: string) {
   useEffect(() => {
     const getPlaylist = async () => {
       const { data, error } = await fetchPlaylist(token, playlistId);
-      if (error || !data) {
+      if (error) {
         setPlaylist([]);
         setIsLoading(false);
+        setIsError(true);
         return;
       }
       const dataPlaylist = data.map((playlistTrack: any, index: number) => {
@@ -95,5 +96,5 @@ export function usePlaylist(playlistId: string) {
     getPlaylist();
   }, []);
 
-  return { playlist, isLoading, isModified, moveTrack, sortPlaylist, cancelChanges, saveChanges };
+  return { playlist, isLoading, isError, isModified, isSaving, moveTrack, sortPlaylist, cancelChanges, saveChanges };
 }

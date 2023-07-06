@@ -1,4 +1,4 @@
-import { PlaylistTrack } from "../../types";
+import { APIReturn, PlaylistTrack } from "../../types";
 import { mockUpdatePlaylistItem } from "../../util/mockApi/mockUpdatePlaylistItem";
 import { updatePlaylistTrack } from "./updatePlaylistTrack";
 
@@ -7,7 +7,7 @@ export async function updatePlaylist(
   playlistId: string,
   unorderedPlaylist: PlaylistTrack[],
   playlist: PlaylistTrack[]
-): Promise<{ data: any; error: boolean }> {
+): Promise<APIReturn> {
   let tempUnorderedPlaylist = [...unorderedPlaylist];
   let tracksSwitched = 0;
   for (let i = 0; i < playlist.length; i++) {
@@ -23,9 +23,7 @@ export async function updatePlaylist(
     if (hasSwitched) tracksSwitched++;
   }
   return {
-    data: {
-      tracksSwitched: tracksSwitched
-    },
+    data: tracksSwitched,
     error: false
   };
 }
