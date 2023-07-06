@@ -14,7 +14,7 @@ export function HeaderCell({ label, setCurrentSort, sortPlaylist, width = "w-[5%
   };
   return (
     <button
-      className={`${width} p-4 hover:bg-green-1 transition-all duration-300`}
+      className={`${width} h-full text-center p-4 hover:bg-green-1 transition-all duration-300`}
       onClick={() => sortByLabel()}>
       {label}
     </button>

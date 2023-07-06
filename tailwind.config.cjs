@@ -4,9 +4,14 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        fade: "fadeOut 0.5s 2.6s"
+        fade: "fadeOut 0.5s 2.6s",
+        linkFade: "fadeIn 0.25s"
       },
       keyframes: () => ({
+        fadeIn: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 }
+        },
         fadeOut: {
           "0%": { opacity: 1 },
           "100%": { opacity: 0 }

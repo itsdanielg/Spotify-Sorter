@@ -19,25 +19,29 @@ export function Playlist() {
   if (!isLoading && isError) return <ErrorPage />;
 
   return (
-    <div className="relative flex flex-col items-center p-4 md:p-8 gap-4 md:gap-8">
-      <PlaylistEdit
-        totalTracks={playlist.length}
-        currentSort={currentSort}
-        isSaving={isSaving}
-        isModified={isModified}
-        cancelChanges={cancelChanges}
-        saveChanges={saveChanges}
-        setCurrentSort={setCurrentSort}
-        isCompact={isCompact}
-        setIsCompact={setIsCompact}
-      />
-      <PlaylistView
-        setCurrentSort={setCurrentSort}
-        playlist={playlist}
-        isCompact={isCompact}
-        moveTrack={moveTrack}
-        sortPlaylist={sortPlaylist}
-      />
+    <div className="flex flex-col items-center">
+      <div className="flex items-center justify-center w-full p-4">
+        <PlaylistEdit
+          totalTracks={playlist.length}
+          currentSort={currentSort}
+          isSaving={isSaving}
+          isModified={isModified}
+          cancelChanges={cancelChanges}
+          saveChanges={saveChanges}
+          setCurrentSort={setCurrentSort}
+          isCompact={isCompact}
+          setIsCompact={setIsCompact}
+        />
+      </div>
+      <div className="flex items-center justify-center w-full p-4 pt-0">
+        <PlaylistView
+          setCurrentSort={setCurrentSort}
+          playlist={playlist}
+          isCompact={isCompact}
+          moveTrack={moveTrack}
+          sortPlaylist={sortPlaylist}
+        />
+      </div>
     </div>
   );
 }

@@ -10,7 +10,7 @@ export function App() {
   return (
     <div className="w-full h-screen flex flex-col bg-gray-2 font-montserrat">
       <Navigation removeToken={removeToken} />
-      <div className="w-full h-full overflow-y-auto overflow-x-hidden">
+      <div className="w-full h-screen overflow-y-auto overflow-x-hidden">
         <AppRoutes />
       </div>
     </div>

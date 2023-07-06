@@ -13,7 +13,7 @@ interface PlaylistViewProps {
 
 export function PlaylistView({ setCurrentSort, playlist, isCompact, moveTrack, sortPlaylist }: PlaylistViewProps) {
   return (
-    <div className="flex flex-col items-center gap-2 w-5/6">
+    <div className="flex flex-col items-center gap-2 w-full md:w-5/6">
       <PlaylistViewHeader
         setCurrentSort={setCurrentSort}
         sortPlaylist={sortPlaylist}

@@ -16,29 +16,25 @@ interface PlaylistLinkProps {
 export function PlaylistLink({ id, name, imageURL, owner, description, collaborative, isPublic }: PlaylistLinkProps) {
   const [showInfo, setShowInfo] = useState(false);
 
-  const albumCoverWidth = "w-80";
   return (
-    <div
-      className="flex flex-col items-center gap-4"
+    <Link
       onMouseOver={() => setShowInfo(true)}
-      onMouseOut={() => setShowInfo(false)}>
-      <Link
-        className={`relative flex flex-col items-center gap-6 p-6 bg-gray-5 hover:bg-gray-6 transition-all`}
-        to={`${id}`}>
-        <AlbumCover
-          src={imageURL}
-          width={albumCoverWidth}
+      onMouseOut={() => setShowInfo(false)}
+      className={`relative flex md:flex-col items-center gap-6 p-6 bg-gray-5 rounded-lg w-full md:w-auto`}
+      to={`${id}`}>
+      <AlbumCover
+        src={imageURL}
+        width="w-20 md:w-80"
+      />
+      {showInfo && (
+        <PlaylistLinkInfo
+          owner={owner}
+          description={description}
+          collaborative={collaborative}
+          isPublic={isPublic}
         />
-        {showInfo && (
-          <PlaylistLinkInfo
-            owner={owner}
-            description={description}
-            collaborative={collaborative}
-            isPublic={isPublic}
-          />
-        )}
-        <span className="text-white-1 text-xl">{name}</span>
-      </Link>
-    </div>
+      )}
+      <span className="text-white-1 text-xl">{name}</span>
+    </Link>
   );
 }
