@@ -1,5 +1,5 @@
-import { MouseEventHandler } from "react";
-import { Link } from "react-router-dom";
+import { ButtonHTMLAttributes } from "react";
+import { Link, LinkProps } from "react-router-dom";
 
 const DEFAULT_BUTTON_STYLE = [
   "p-3",
@@ -10,30 +10,25 @@ const DEFAULT_BUTTON_STYLE = [
   "transition-all"
 ].join(" ");
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
-  onClick: MouseEventHandler<HTMLButtonElement>;
-  disabled?: boolean;
   className?: string;
 }
 
-interface LinkButtonProps {
-  label: string;
-  to: string;
-  disabled?: boolean;
-  className?: string;
-}
-
-export function Button({ label, onClick, disabled = false, className = "", ...props }: ButtonProps) {
+export function Button({ label, className = "", ...props }: ButtonProps) {
   return (
     <button
       {...props}
-      className={`${className} ${DEFAULT_BUTTON_STYLE}`}
-      disabled={disabled}
-      onClick={onClick}>
+      className={`${className} ${DEFAULT_BUTTON_STYLE}`}>
       {label}
     </button>
   );
+}
+interface LinkButtonProps extends LinkProps {
+  to: string;
+  label: string;
+  disabled?: boolean;
+  className?: string;
 }
 
 export function LinkButton({ label, to, disabled = false, className = "", ...props }: LinkButtonProps) {

@@ -1,10 +1,11 @@
-interface ImageProps {
+import { ImgHTMLAttributes } from "react";
+
+interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   src: string;
-  alt?: string;
   className?: string;
 }
 
-export function Image({ src, alt, className = "", ...props }: ImageProps) {
+export function Image({ src, className = "", ...props }: ImageProps) {
   const sampleURL = "https://gtrusted.com/resources/images/noimage.jpg";
 
   return (
@@ -12,7 +13,6 @@ export function Image({ src, alt, className = "", ...props }: ImageProps) {
       {...props}
       className={`${className} w-full h-full select-none`}
       src={src ? src : sampleURL}
-      alt={alt}
     />
   );
 }

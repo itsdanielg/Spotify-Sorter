@@ -16,21 +16,26 @@ export interface ToggleProps {
   checked: boolean;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   disabled?: boolean;
-  width?: number;
-  height?: number;
+  width?: string;
+  height?: string;
   className?: string;
 }
 
-export const Toggle = ({ checked, onChange, disabled = false, width, height, className }: ToggleProps) => {
+export function Toggle({
+  checked,
+  onChange,
+  disabled = false,
+  width = "w-8",
+  height = "h-5",
+  className = ""
+}: ToggleProps) {
   const backgroundClass = checked ? "bg-green-1" : "bg-gray-200";
   const growClass = checked ? "grow" : "grow-0";
-  const defaultWidth = width == undefined ? "w-8" : `w-${width}`;
-  const defaultHeight = height == undefined ? "h-5" : `h-${height}`;
   const disabledClass = disabled ? "opacity-30" : "";
 
   return (
     <span
-      className={`${defaultWidth} ${defaultHeight} ${className} ${disabledClass}`}
+      className={`${className} ${width} ${height} ${disabledClass}`}
       role="switch"
       aria-checked={checked}>
       <input
@@ -49,4 +54,4 @@ export const Toggle = ({ checked, onChange, disabled = false, width, height, cla
       </span>
     </span>
   );
-};
+}

@@ -1,4 +1,4 @@
-import { MouseEventHandler } from "react";
+import { ButtonHTMLAttributes, MouseEventHandler } from "react";
 
 const DEFAULT_HAMBURGER_STYLE = [
   "relative",
@@ -15,13 +15,12 @@ const DEFAULT_HAMBURGER_STYLE = [
   "[&>*]:transition-all"
 ].join(" ");
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   toggle: boolean;
-  onClick: MouseEventHandler<HTMLButtonElement>;
   className?: string;
 }
 
-export function Hamburger({ toggle = true, onClick, className = "", ...props }: ButtonProps) {
+export function Hamburger({ toggle = true, className = "", ...props }: ButtonProps) {
   const toggleStyleTop = toggle ? "translate-y-[-100%] opacity-0" : "";
   const toggleStyleMiddleTop = toggle ? "rotate-45" : "";
   const toggleStyleMiddleBottom = toggle ? "rotate-[-45deg]" : "";
@@ -29,8 +28,7 @@ export function Hamburger({ toggle = true, onClick, className = "", ...props }: 
   return (
     <button
       {...props}
-      className={`${className} ${DEFAULT_HAMBURGER_STYLE}`}
-      onClick={onClick}>
+      className={`${className} ${DEFAULT_HAMBURGER_STYLE}`}>
       <div className={`${toggleStyleTop} mb-2`} />
       <div className={`${toggleStyleMiddleTop} absolute`} />
       <div className={`${toggleStyleMiddleBottom} absolute`} />

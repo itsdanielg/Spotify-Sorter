@@ -1,8 +1,8 @@
-interface LoadingAnimationProps {
+interface LoaderProps {
   width?: string;
 }
 
-export function LoadingAnimation({ width = "w-32" }: LoadingAnimationProps) {
+export function Loader({ width = "w-32" }: LoaderProps) {
   return (
     <div role="status">
       <svg

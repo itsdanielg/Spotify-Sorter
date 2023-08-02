@@ -1,3 +1,5 @@
+import { HTMLAttributes } from "react";
+
 const DEFAULT_SNACKBAR_STYLE = [
   "fixed",
   "bottom-10",
@@ -9,7 +11,7 @@ const DEFAULT_SNACKBAR_STYLE = [
   "rounded-lg"
 ].join(" ");
 
-interface SnackbarProps {
+interface SnackbarProps extends HTMLAttributes<HTMLDivElement> {
   children: JSX.Element | JSX.Element[];
   className?: string;
 }
