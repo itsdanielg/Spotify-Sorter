@@ -10,7 +10,7 @@ export function Home() {
   return (
     <div className="flex flex-col items-center p-4 gap-4">
       <div className="flex items-center justify-center my-4">
-        <span className="text-white-1 text-[3.5rem] font-bold">Playlists</span>
+        <span className="text-white text-[3.5rem] font-bold">Playlists</span>
       </div>
       <div className="flex flex-col md:flex-row md:flex-wrap items-center md:justify-center gap-4 md:gap-12 w-full md:w-auto">
         {playlists.map(({ id, name, imageURL, owner, description, collaborative, isPublic }: Playlist) => {

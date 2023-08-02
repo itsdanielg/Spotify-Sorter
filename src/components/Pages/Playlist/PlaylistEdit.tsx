@@ -42,13 +42,13 @@ export function PlaylistEdit({
     <div className="flex gap-4 w-full md:w-[60%] p-4 bg-gray-3">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col md:flex-row md:gap-8">
-          <span className="text-white-1">
+          <span className="text-white">
             Total Tracks:
-            <span className="font-bold text-green-1">{` ${totalTracks}`}</span>
+            <span className="font-bold text-green">{` ${totalTracks}`}</span>
           </span>
-          <span className="text-white-1">
+          <span className="text-white">
             Current Sort:
-            <span className="font-bold text-green-1">{` ${currentSort}`}</span>
+            <span className="font-bold text-green">{` ${currentSort}`}</span>
           </span>
         </div>
         <div className="flex gap-2">

@@ -11,7 +11,7 @@ export function PlaylistTrackCompact({
   track: { title, artists, album, releaseDate, dateAdded, timeAdded, trackNumber },
   rearranged
 }: PlaylistTrackCompactProps) {
-  const background = rearranged ? "text-black bg-green-2 hover:bg-green-3" : "text-white-1 bg-gray-5 hover:bg-gray-6";
+  const background = rearranged ? "text-black bg-green hover:bg-greenHover" : "text-white bg-gray-5 hover:bg-gray-6";
 
   return (
     <div

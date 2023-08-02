@@ -26,15 +26,14 @@ export function PlaylistLink({ id, name, imageURL, owner, description, collabora
         src={imageURL}
         width="w-20 md:w-80"
       />
-      {showInfo && (
-        <PlaylistLinkInfo
-          owner={owner}
-          description={description}
-          collaborative={collaborative}
-          isPublic={isPublic}
-        />
-      )}
-      <span className="text-white-1 text-xl">{name}</span>
+      <PlaylistLinkInfo
+        show={showInfo}
+        owner={owner}
+        description={description}
+        collaborative={collaborative}
+        isPublic={isPublic}
+      />
+      <span className="text-white text-xl">{name}</span>
     </Link>
   );
 }

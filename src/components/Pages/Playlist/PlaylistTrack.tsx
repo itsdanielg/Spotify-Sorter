@@ -12,7 +12,7 @@ export function PlaylistTrack({
   track: { title, artists, album, albumURL, releaseDate, dateAdded, timeAdded, trackNumber },
   rearranged
 }: PlaylistTrackProps) {
-  const background = rearranged ? "text-black bg-green-2 hover:bg-green-3" : "text-white-1 bg-gray-5 hover:bg-gray-6";
+  const background = rearranged ? "text-black bg-green hover:bg-greenHover" : "text-white bg-gray-5 hover:bg-gray-6";
 
   return (
     <div className={`${background} flex items-center w-full transition [&>*]:p-2`}>

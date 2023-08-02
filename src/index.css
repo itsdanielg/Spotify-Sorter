@@ -9,5 +9,22 @@
 }
 
 * {
-  font-family: "Roboto", sans-serif;
+  font-family: "Raleway", sans-serif;
+}
+
+body {
+  background-color: theme("colors.grayBackground");
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  opacity: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: theme("colors.black");
+  border-radius: 1rem;
 }

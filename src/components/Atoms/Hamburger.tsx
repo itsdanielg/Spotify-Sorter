@@ -11,7 +11,7 @@ const DEFAULT_HAMBURGER_STYLE = [
   "[&>*]:w-full",
   "[&>*]:h-[2px]",
   "[&>*]:rounded-lg",
-  "[&>*]:bg-green-1",
+  "[&>*]:bg-green",
   "[&>*]:transition-all"
 ].join(" ");
 

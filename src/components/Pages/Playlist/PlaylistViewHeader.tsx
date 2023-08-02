@@ -8,7 +8,7 @@ interface PlaylistViewHeaderProps {
 
 export function PlaylistViewHeader({ setCurrentSort, sortPlaylist }: PlaylistViewHeaderProps) {
   return (
-    <div className="sticky top-0 flex items-center w-full h-20 rounded-md bg-gray-3 text-white-1 overflow-x-auto md:overflow-hidden">
+    <div className="sticky top-0 flex items-center w-full h-20 rounded-md bg-gray-3 text-white overflow-x-auto md:overflow-hidden">
       <div className="md:w-[5%] p-4 text-center select-none">#</div>
       <HeaderCell
         label="Release Date"

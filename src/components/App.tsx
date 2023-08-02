@@ -8,7 +8,7 @@ export function App() {
 
   if (!token) return <Login />;
   return (
-    <div className="w-full h-screen flex flex-col bg-gray-2 font-montserrat">
+    <div className="w-full h-screen flex flex-col">
       <Navigation removeToken={removeToken} />
       <div className="w-full h-screen overflow-y-auto overflow-x-hidden">
         <AppRoutes />

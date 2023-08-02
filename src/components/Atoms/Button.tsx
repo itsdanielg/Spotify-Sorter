@@ -4,10 +4,13 @@ import { Link, LinkProps } from "react-router-dom";
 const DEFAULT_BUTTON_STYLE = [
   "p-3",
   "rounded-lg",
-  "bg-green-1",
-  "disabled:opacity-30",
-  "hover:opacity-50",
-  "transition-all"
+  "bg-green",
+  "select-none",
+  "disabled:opacity-60",
+  "disabled:pointer-events-none",
+  "md:hover:bg-greenHover",
+  "transition-all",
+  "duration-250"
 ].join(" ");
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

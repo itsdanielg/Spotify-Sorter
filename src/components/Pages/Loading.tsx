@@ -1,9 +1,9 @@
-import { LoadingAnimation } from "../Atoms/LoadingAnimation";
+import { Loader } from "../Atoms";
 
 export function Loading() {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <LoadingAnimation />
+      <Loader />
     </div>
   );
 }

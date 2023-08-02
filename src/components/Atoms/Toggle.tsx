@@ -29,7 +29,7 @@ export function Toggle({
   height = "h-5",
   className = ""
 }: ToggleProps) {
-  const backgroundClass = checked ? "bg-green-1" : "bg-gray-200";
+  const backgroundClass = checked ? "bg-green" : "bg-gray-200";
   const growClass = checked ? "grow" : "grow-0";
   const disabledClass = disabled ? "opacity-30" : "";
 
