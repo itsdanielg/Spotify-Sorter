@@ -1,14 +1,13 @@
+import { useContext } from "react";
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
-import { PlaylistTrack } from "../../../types";
+import { PlaylistContext } from "../../Playlist";
 import { DraggablePlaylistTrack } from "./DraggablePlaylistTrack";
 
-export interface DraggablePlaylistSongsProps {
-  playlistSongs: PlaylistTrack[];
-  isCompact: boolean;
-  moveTrack: (sourceIndex: number, destinationIndex: number) => void;
-}
+export function PlaylistViewTracks() {
+  const {
+    playlistHook: { moveTrack, playlist }
+  } = useContext(PlaylistContext);
 
-export function DraggablePlaylistSongs({ playlistSongs, isCompact, moveTrack }: DraggablePlaylistSongsProps) {
   const handleOnDragEnd = (draggedCard: DropResult) => {
     if (!draggedCard.destination) return;
     if (draggedCard.source.index === draggedCard.destination.index) return;
@@ -23,13 +22,12 @@ export function DraggablePlaylistSongs({ playlistSongs, isCompact, moveTrack }: 
             {...provided.droppableProps}
             ref={provided.innerRef}
             className="flex flex-col items-center w-full">
-            {playlistSongs.map(({ id, index, track, rearranged }) => (
+            {playlist.map(({ id, index, track, rearranged }) => (
               <DraggablePlaylistTrack
                 key={id}
                 id={id}
                 index={index}
                 track={track}
-                isCompact={isCompact}
                 rearranged={!!rearranged}
               />
             ))}

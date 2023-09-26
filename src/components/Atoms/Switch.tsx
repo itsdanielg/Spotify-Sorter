@@ -12,7 +12,7 @@ const TOGGLE_CONTAINER_STYLES = [
   "ease-in-out"
 ].join(" ");
 
-export interface ToggleProps {
+export interface SwitchProps {
   checked: boolean;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   disabled?: boolean;
@@ -21,14 +21,14 @@ export interface ToggleProps {
   className?: string;
 }
 
-export function Toggle({
+export function Switch({
   checked,
   onChange,
   disabled = false,
   width = "w-8",
   height = "h-5",
   className = ""
-}: ToggleProps) {
+}: SwitchProps) {
   const backgroundClass = checked ? "bg-green" : "bg-gray-200";
   const growClass = checked ? "grow" : "grow-0";
   const disabledClass = disabled ? "opacity-30" : "";

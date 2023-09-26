@@ -1,8 +1,10 @@
 import { HTMLAttributes } from "react";
+import ReactDOM from "react-dom";
 
 const DEFAULT_SNACKBAR_STYLE = [
-  "fixed",
-  "bottom-10",
+  "absolute",
+  "bottom-4",
+  "md:bottom-16",
   "right-1/2",
   "translate-x-1/2",
   "flex",
@@ -17,11 +19,14 @@ interface SnackbarProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export function Snackbar({ children, className = "", ...props }: SnackbarProps) {
-  return (
+  const snackbarDiv = document.getElementById("snackbar")!;
+
+  return ReactDOM.createPortal(
     <div
       {...props}
       className={`${className} ${DEFAULT_SNACKBAR_STYLE}`}>
       {children}
-    </div>
+    </div>,
+    snackbarDiv
   );
 }

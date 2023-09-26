@@ -5,7 +5,8 @@ module.exports = {
     extend: {
       animation: {
         fade: "fadeOut 0.5s 2.6s",
-        linkFade: "fadeIn 0.25s"
+        linkFade: "fadeIn 0.25s",
+        snackbar: "fadeIn 0.5s, fadeOut 0.5s 2.6s"
       },
       keyframes: () => ({
         fadeIn: {
@@ -20,7 +21,9 @@ module.exports = {
       colors: {
         green: { DEFAULT: "hsl(141, 73%, 42%)" },
         greenHover: { DEFAULT: "hsl(141, 73%, 62%)" },
-        grayBackground: "#222222",
+        red: { DEFAULT: "hsl(8, 73%, 42%)" },
+        grayBackground: "rgb(34, 34, 34)",
+        grayBackgroundTransparent: { DEFAULT: "rgba(34, 34, 34, 0.7)" },
         "gray-1": "#b3b3b3", // subtext
         "gray-3": "#181818", // table header
         "gray-4": "#251b1c", // background
