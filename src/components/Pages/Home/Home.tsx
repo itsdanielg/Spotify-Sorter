@@ -1,10 +1,13 @@
-import { usePlaylists } from "../../../api/hooks/usePlaylists";
+import { usePlaylists, usePlaylistsReturn } from "../../../api/hooks/usePlaylists";
 import { Playlist } from "../../../types";
 import { PlaylistLink } from "./PlaylistLink";
 import { Loading } from "../Loading";
 
 export function Home() {
-  const playlists: Playlist[] = usePlaylists();
+  const { data, error } = usePlaylists();
+
+  if (error) return <></>;
+  const { playlists } = data as usePlaylistsReturn;
 
   if (playlists.length === 0) return <Loading />;
   return (

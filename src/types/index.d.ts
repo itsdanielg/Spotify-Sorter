@@ -1,9 +1,16 @@
-type APIResponse = 200 | 401 | 403 | 404 | 429;
+import { SpotifyResponseSuccess, SpotifyError } from "./spotify";
+
+export * from "./spotify";
 
 type APIReturn = {
-  data: any;
+  data: SpotifyResponseSuccess | null;
   error: boolean;
-  response?: APIResponse;
+  errorResponse?: SpotifyError;
+};
+
+type HookReturn<T> = {
+  data: T | null;
+  error: SpotifyError | null;
 };
 
 type Playlist = {
@@ -34,4 +41,4 @@ type Track = {
   timeAdded: string;
 };
 
-export type { APIReturn, Playlist, PlaylistTrack, Track };
+export type { APIReturn, HookReturn, Playlist, PlaylistTrack, Track };

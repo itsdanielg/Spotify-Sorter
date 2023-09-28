@@ -1,7 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
-import { useEffect, useState } from "react";
-import { PlaylistTrack, Track } from "../../types";
+import { useEffect, useReducer, useState } from "react";
+import { HookReturn, PlaylistTrack, SpotifyError, SpotifyPlaylistTrack, Track } from "../../types";
 import { getSortedPlaylist } from "../../util/getSortedPlaylist";
 import { markChangedSongs } from "../../util/markChangedSongs";
 import { unmarkSongs } from "../../util/unmarkSongs";
@@ -9,15 +7,74 @@ import { fetchPlaylist } from "../calls/fetchPlaylist";
 import { updatePlaylist } from "../calls/updatePlaylist";
 import { useToken } from "./useToken";
 
-export function usePlaylist(playlistId: string) {
+enum PlaylistActions {
+  INITIALIZE,
+  INITIALIZE_SUCCESS,
+  INITIALIZE_ERROR,
+  SAVE,
+  SAVE_SUCCESS,
+  SAVE_ERROR,
+  CANCEL
+}
+interface PlaylistAction {
+  type: PlaylistActions;
+}
+
+export interface usePlaylistStateTypes {
+  initializing: boolean;
+  initError: boolean;
+  saving: boolean;
+  savingError: boolean;
+}
+
+const initialState: usePlaylistStateTypes = {
+  initializing: false,
+  initError: false,
+  saving: false,
+  savingError: false
+};
+
+function usePlaylistReducer(state: usePlaylistStateTypes, action: PlaylistAction): usePlaylistStateTypes {
+  switch (action.type) {
+    case PlaylistActions.INITIALIZE:
+      return { ...state, initializing: true };
+    case PlaylistActions.INITIALIZE_SUCCESS:
+      return { ...state, initializing: false, initError: false };
+    case PlaylistActions.INITIALIZE_ERROR:
+      return { ...state, initializing: false, initError: true };
+    case PlaylistActions.SAVE:
+      return { ...state, saving: true };
+    case PlaylistActions.SAVE_SUCCESS:
+      return { ...state, saving: true };
+    case PlaylistActions.SAVE:
+      return { ...state, saving: true };
+    case PlaylistActions.CANCEL:
+      return { ...state, saving: false };
+    default:
+      return state;
+  }
+}
+
+export type usePlaylistReturn = {
+  playlist: PlaylistTrack[];
+  playlistState: usePlaylistStateTypes;
+  isModified: boolean;
+  moveTrack: (sourceIndex: number, destinationIndex: number) => void;
+  sortPlaylist: (field: string) => Promise<void>;
+  cancelChanges: () => void;
+  saveChanges: () => Promise<void>;
+};
+
+export function usePlaylist(playlistId: string): HookReturn<usePlaylistReturn> {
   const { token } = useToken();
+
+  const [error, setError] = useState<SpotifyError | null>(null);
 
   const [playlist, setPlaylist] = useState<PlaylistTrack[]>([]);
   const [unorderedPlaylist, setUnorderedPlaylist] = useState<PlaylistTrack[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
   const [isModified, setIsModified] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
+
+  const [playlistState, dispatch] = useReducer(usePlaylistReducer, initialState);
 
   const moveTrack = (sourceIndex: number, destinationIndex: number) => {
     const newPlaylist = [...playlist];
@@ -42,15 +99,16 @@ export function usePlaylist(playlistId: string) {
   };
 
   const saveChanges = async () => {
-    setIsSaving(true);
+    dispatch({ type: PlaylistActions.SAVE });
     const { data, error } = await updatePlaylist(token, playlistId, unorderedPlaylist, playlist);
     if (error) {
+      dispatch({ type: PlaylistActions.SAVE_ERROR });
       return;
     }
     const newPlaylist = unmarkSongs(playlist);
     setPlaylist(newPlaylist);
     setUnorderedPlaylist(newPlaylist);
-    setIsSaving(false);
+    dispatch({ type: PlaylistActions.SAVE_SUCCESS });
   };
 
   useEffect(() => {
@@ -65,36 +123,41 @@ export function usePlaylist(playlistId: string) {
 
   useEffect(() => {
     const getPlaylist = async () => {
-      const { data, error } = await fetchPlaylist(token, playlistId);
+      dispatch({ type: PlaylistActions.INITIALIZE });
+      const { data, error, errorResponse } = await fetchPlaylist(token, playlistId);
       if (error) {
         setPlaylist([]);
-        setIsLoading(false);
-        setIsError(true);
-        return;
+        dispatch({ type: PlaylistActions.INITIALIZE_ERROR });
+        return errorResponse;
       }
-      const dataPlaylist = data.map((playlistTrack: any, index: number) => {
-        return {
-          id: playlistTrack.track.id,
-          index: index,
-          track: {
-            title: playlistTrack.track.name,
-            artists: playlistTrack.track.artists.map((artist: any) => artist.name),
-            album: playlistTrack.track.album.name,
-            albumURL: playlistTrack.track.album.images[0].url,
-            releaseDate: playlistTrack.track.album.release_date,
-            dateAdded: new Date(playlistTrack.added_at).toLocaleDateString(),
-            timeAdded: new Date(playlistTrack.added_at).toLocaleTimeString(),
-            trackNumber: playlistTrack.track.track_number
-          } as Track,
-          rearranged: false
-        } as PlaylistTrack;
-      });
-      setPlaylist(dataPlaylist);
-      setUnorderedPlaylist(dataPlaylist);
-      setIsLoading(false);
+
+      const dataPlaylistTracks = data as SpotifyPlaylistTrack[];
+      const playlistTracks: PlaylistTrack[] = dataPlaylistTracks.map(
+        (playlistTrack: SpotifyPlaylistTrack, index: number) => {
+          return {
+            id: playlistTrack.track.id ?? 1,
+            index: index,
+            track: {
+              title: playlistTrack.track.name,
+              artists: playlistTrack.track.artists.map((artist: any) => artist.name),
+              album: playlistTrack.track.album.name,
+              albumURL: playlistTrack.track.album.images[0]?.url ?? "",
+              releaseDate: playlistTrack.track.album.release_date,
+              dateAdded: new Date(playlistTrack.added_at).toLocaleDateString(),
+              timeAdded: new Date(playlistTrack.added_at).toLocaleTimeString(),
+              trackNumber: playlistTrack.track.track_number
+            } as Track,
+            rearranged: false
+          } as PlaylistTrack;
+        }
+      );
+
+      setPlaylist(playlistTracks);
+      setUnorderedPlaylist(playlistTracks);
+      dispatch({ type: PlaylistActions.INITIALIZE_SUCCESS });
     };
     getPlaylist();
   }, []);
 
-  return { playlist, isLoading, isError, isModified, isSaving, moveTrack, sortPlaylist, cancelChanges, saveChanges };
+  return { data: { playlist, playlistState, isModified, moveTrack, sortPlaylist, cancelChanges, saveChanges }, error };
 }

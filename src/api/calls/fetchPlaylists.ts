@@ -1,9 +1,16 @@
-import axios from "axios";
-import { APIReturn } from "../../types";
+import axios, { AxiosError } from "axios";
+import {
+  APIReturn,
+  SpotifySimplifiedPlaylist,
+  SpotifyError,
+  SpotifyUserPlaylists,
+  SpotifyResponseError
+} from "../../types";
 
 export async function fetchPlaylists(token: string): Promise<APIReturn> {
-  const data: any = [];
+  const simplifiedPlaylists: SpotifySimplifiedPlaylist[] = [];
 
+  let loopResponseError: SpotifyError;
   const getPlaylists = async (href: string) => {
     await axios
       .get(href, {
@@ -12,16 +19,15 @@ export async function fetchPlaylists(token: string): Promise<APIReturn> {
           "Content-Type": "application/json"
         }
       })
-      .then(async (response) => {
-        data.push(...response.data.items);
-        if (response.data.limit === 20) {
-          await getPlaylists(response.data.next);
+      .then(async ({ data }: { data: SpotifyUserPlaylists }) => {
+        simplifiedPlaylists.push(...data.items);
+        if (data.next) {
+          await getPlaylists(data.next);
         }
       })
-      .catch(() => {
-        return null;
+      .catch((error: AxiosError) => {
+        loopResponseError = (error.response?.data as SpotifyResponseError).error;
       });
-    return true;
   };
 
   return axios
@@ -31,12 +37,13 @@ export async function fetchPlaylists(token: string): Promise<APIReturn> {
         "Content-Type": "application/json"
       }
     })
-    .then(async (response) => {
-      const loopResponse = await getPlaylists(response.data.href);
-      if (!loopResponse) return { data: null, error: true };
-      return { data: data, error: false };
+    .then(async ({ data }: { data: SpotifyUserPlaylists }) => {
+      await getPlaylists(data.href);
+      if (loopResponseError) return { data: null, error: true, errorResponse: loopResponseError };
+      return { data: simplifiedPlaylists, error: false };
     })
-    .catch(() => {
-      return { data: null, error: true };
+    .catch((error: AxiosError) => {
+      const responseError: SpotifyResponseError = error.response?.data as SpotifyResponseError;
+      return { data: null, error: true, errorResponse: responseError.error as SpotifyError };
     });
 }

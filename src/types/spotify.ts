@@ -1,25 +1,45 @@
-type SpotifyPlaylist = {
+type SpotifyUser = {
+  id: string;
+  display_name: string | null;
+  type: "user";
+};
+
+type SpotifyUserPlaylists = {
+  href: string;
+  limit: number;
+  next: string | null;
+  offset: number;
+  previous: string | null;
+  total: number;
+  items: SpotifySimplifiedPlaylist[];
+};
+
+type SpotifySimplifiedPlaylist = {
   id: string;
   name: string;
   collaborative: boolean;
   description: string | null;
+  href: string;
   images: SpotifyImage[];
-  owner: SpotifyOwner;
+  owner: SpotifyUser;
   public: boolean;
-  tracks: SpotifyPlaylistTracks;
+  tracks: SpotifySimplifiedPlaylistTracks;
   type: "playlist";
+};
+
+type SpotifySimplifiedPlaylistTracks = {
+  href: string;
+  total: number;
+};
+
+type SpotifyPlaylist = SpotifySimplifiedPlaylist & {
+  tracks: SpotifyPlaylistTracks;
 };
 
 type SpotifyImage = {
   height: number | null;
   url: string;
   width: number | null;
-};
-
-type SpotifyOwner = {
-  id: string;
-  display_name: string | null;
-  type: "user";
 };
 
 type SpotifyPlaylistTracks = {
@@ -34,7 +54,7 @@ type SpotifyPlaylistTracks = {
 
 type SpotifyPlaylistTrack = {
   added_at: string;
-  added_by: SpotifyOwner;
+  added_by: SpotifyUser;
   is_local: boolean;
   track: SpotifyTrack;
 };
@@ -87,15 +107,29 @@ type SpotifyRestriction = {
   reason: "market" | "product" | "explicit";
 };
 
+type SpotifyResponseError = {
+  error: SpotifyError;
+};
+
+type SpotifyError = {
+  status: number;
+  message: string;
+};
+
 export type {
+  SpotifyUser,
+  SpotifyUserPlaylists,
+  SpotifySimplifiedPlaylist,
+  SpotifySimplifiedPlaylistTracks,
   SpotifyPlaylist,
   SpotifyImage,
-  SpotifyOwner,
   SpotifyPlaylistTracks,
   SpotifyPlaylistTrack,
   SpotifyTrack,
   SpotifyAlbum,
   SpotifySimplifiedArtist,
   SpotifyArtist,
-  SpotifyRestriction
+  SpotifyRestriction,
+  SpotifyResponseError,
+  SpotifyError
 };

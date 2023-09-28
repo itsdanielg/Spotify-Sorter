@@ -1,24 +1,28 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
 import { useEffect, useState } from "react";
-import { Playlist } from "../../types";
+import { HookReturn, Playlist, SpotifyError, SpotifyPlaylist, SpotifySimplifiedPlaylist } from "../../types";
 import { fetchPlaylists } from "../calls/fetchPlaylists";
 import { useToken } from "./useToken";
 
-export function usePlaylists() {
+export type usePlaylistsReturn = {
+  playlists: Playlist[];
+};
+
+export function usePlaylists(): HookReturn<usePlaylistsReturn> {
   const { token } = useToken();
 
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
+  const [error, setError] = useState<SpotifyError | null>(null);
 
   useEffect(() => {
     const getPlaylists = async () => {
-      const { data, error } = await fetchPlaylists(token);
-      if (error || !data) {
-        setPlaylists([]);
+      const { data, error, errorResponse } = await fetchPlaylists(token);
+      if (error) {
+        setError(errorResponse as SpotifyError);
         return;
       }
 
-      const dataPlaylists = data.map((playlist: any) => {
+      const dataPlaylists = data as SpotifySimplifiedPlaylist[];
+      const newPlaylists: Playlist[] = dataPlaylists.map((playlist: SpotifySimplifiedPlaylist) => {
         return {
           id: playlist.id,
           name: playlist.name,
@@ -29,10 +33,12 @@ export function usePlaylists() {
           isPublic: playlist.public
         } as Playlist;
       });
-      setPlaylists(dataPlaylists);
+
+      setPlaylists(newPlaylists);
     };
+
     getPlaylists();
   }, []);
 
-  return playlists;
+  return { data: { playlists }, error };
 }

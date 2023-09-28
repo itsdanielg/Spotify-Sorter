@@ -23,7 +23,10 @@ export function Playlist() {
   const [showSnackbar, setShowSnackbar] = useState(false);
 
   const location = useLocation();
-  const playlistHook = usePlaylist(location.pathname.substring(1));
+  const { data, error } = usePlaylist(location.pathname.substring(1));
+
+  if (error) return <></>;
+  const playlistHook = data as usePlaylistReturn;
 
   if (playlistHook.playlistState.initializing) return <Loading />;
   if (playlistHook.playlistState.initError) return <ErrorPage />;

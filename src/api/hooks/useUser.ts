@@ -1,19 +1,34 @@
 import { useEffect, useState } from "react";
-import { useToken } from "./useToken";
+import { SpotifyError, SpotifyUser, HookReturn } from "../../types";
 import { fetchUser } from "../calls/fetchUser";
+import { useToken } from "./useToken";
 
-export function useUser() {
+export type useUserReturn = {
+  name: string;
+};
+
+export function useUser(): HookReturn<useUserReturn> {
   const { token } = useToken();
 
   const [name, setName] = useState("");
+  const [error, setError] = useState<SpotifyError | null>(null);
 
   useEffect(() => {
     const getUser = async () => {
-      const data = await fetchUser(token);
-      setName(data.display_name.split(" ")[0]);
+      const { data, error, errorResponse } = await fetchUser(token);
+      if (error) {
+        setError(errorResponse as SpotifyError);
+        return;
+      }
+
+      const dataUser = data as SpotifyUser;
+      const name = dataUser.display_name ?? "";
+
+      setName(name.split(" ")[0]);
     };
+
     getUser();
   }, []);
 
-  return name;
+  return { data: { name }, error: error };
 }

@@ -1,6 +1,6 @@
 import { SetStateAction, useState } from "react";
-import { Link } from "react-router-dom";
-import { useUser } from "../../../api/hooks/useUser";
+import { Link, redirect } from "react-router-dom";
+import { useUser, useUserReturn } from "../../../api/hooks/useUser";
 import { Button } from "../../Atoms/Button";
 import { Hamburger } from "../../Atoms/Hamburger";
 import { NavigationMenu } from "./NavigationMenu";
@@ -11,7 +11,9 @@ interface NavigationProps {
 
 export function Navigation({ removeToken }: NavigationProps) {
   const [show, setShow] = useState(false);
-  const name = useUser();
+  const { data, error } = useUser();
+
+  const { name } = data as useUserReturn;
 
   return (
     <div className="relative w-full bg-black">
