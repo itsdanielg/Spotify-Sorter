@@ -29,7 +29,6 @@ export function Playlist() {
   const playlistHook = data as usePlaylistReturn;
 
   if (playlistHook.playlistState.initializing) return <Loading />;
-  if (playlistHook.playlistState.initError) return <ErrorPage />;
 
   return (
     <PlaylistContext.Provider value={{ playlistHook, isCompact, currentSort, setIsCompact, setCurrentSort }}>

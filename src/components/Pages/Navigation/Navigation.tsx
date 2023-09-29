@@ -1,19 +1,14 @@
-import { SetStateAction, useState } from "react";
-import { Link, redirect } from "react-router-dom";
-import { useUser, useUserReturn } from "../../../api/hooks/useUser";
-import { Button } from "../../Atoms/Button";
-import { Hamburger } from "../../Atoms/Hamburger";
-import { NavigationMenu } from "./NavigationMenu";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Hamburger } from "../../Atoms";
+import { LogoutButton } from "../../Compounds";
 
 interface NavigationProps {
-  removeToken: () => void;
+  name: string;
 }
 
-export function Navigation({ removeToken }: NavigationProps) {
+export function Navigation({ name }: NavigationProps) {
   const [show, setShow] = useState(false);
-  const { data, error } = useUser();
-
-  const { name } = data as useUserReturn;
 
   return (
     <div className="relative w-full bg-black">
@@ -26,10 +21,7 @@ export function Navigation({ removeToken }: NavigationProps) {
               to={"/"}>
               Playlists
             </Link>
-            <Button
-              label="Log Out"
-              onClick={() => removeToken()}
-            />
+            <LogoutButton />
           </div>
           <div className="md:hidden flex items-center gap-4">
             <Hamburger
@@ -39,12 +31,12 @@ export function Navigation({ removeToken }: NavigationProps) {
           </div>
         </div>
       </div>
-      {show && (
+      {/* {show && (
         <NavigationMenu
           removeToken={removeToken}
           setShow={setShow}
         />
-      )}
+      )} */}
     </div>
   );
 }

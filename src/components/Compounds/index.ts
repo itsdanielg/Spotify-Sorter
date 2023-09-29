@@ -1,3 +1,4 @@
+export * from "./AuthenticationButtons";
 export * from "./AlbumCover";
 export * from "./DraggableRow";
 export * from "./LabeledSwitch";
