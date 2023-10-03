@@ -2,7 +2,7 @@ import { useEffect, useReducer, useState } from "react";
 import { HookReturn, PlaylistTrack, SpotifyError, SpotifyPlaylistTrack, Track } from "../../types";
 import { getSortedPlaylist } from "../../util/getSortedPlaylist";
 import { markChangedSongs } from "../../util/markChangedSongs";
-import { unmarkSongs } from "../../util/unmarkSongs";
+import { unmarkPlaylistTracks } from "@/util";
 import { fetchPlaylist } from "../calls/fetchPlaylist";
 import { updatePlaylist } from "../calls/updatePlaylist";
 import { useToken } from "./useToken";
@@ -105,7 +105,7 @@ export function usePlaylist(playlistId: string): HookReturn<usePlaylistReturn> {
       dispatch({ type: PlaylistActions.SAVE_ERROR });
       return;
     }
-    const newPlaylist = unmarkSongs(playlist);
+    const newPlaylist = unmarkPlaylistTracks(playlist);
     setPlaylist(newPlaylist);
     setUnorderedPlaylist(newPlaylist);
     dispatch({ type: PlaylistActions.SAVE_SUCCESS });
