@@ -1,5 +1,5 @@
 import { SpotifyError } from "../../../types";
-import { LogoutButton, RetryButton } from "../../Compounds";
+import { RetryButton } from "../../Compounds";
 
 interface ErrorPageProps extends SpotifyError {}
 
