@@ -16,6 +16,7 @@ const playlistTracks: PlaylistTrack[] = [
       dateAdded: "",
       timeAdded: ""
     },
+    isLocal: false,
     rearranged: true
   },
   {
@@ -31,6 +32,7 @@ const playlistTracks: PlaylistTrack[] = [
       dateAdded: "",
       timeAdded: ""
     },
+    isLocal: false,
     rearranged: true
   },
   {
@@ -46,6 +48,7 @@ const playlistTracks: PlaylistTrack[] = [
       dateAdded: "",
       timeAdded: ""
     },
+    isLocal: false,
     rearranged: true
   }
 ];

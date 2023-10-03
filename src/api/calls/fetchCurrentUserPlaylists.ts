@@ -1,16 +1,10 @@
 import axios, { AxiosError } from "axios";
-import {
-  APIReturn,
-  SpotifySimplifiedPlaylist,
-  SpotifyError,
-  SpotifyUserPlaylists,
-  SpotifyResponseError
-} from "../../types";
+import { APIReturn, SpotifySimplifiedPlaylist, SpotifyUserPlaylists, SpotifyResponseError } from "@/types";
 
-export async function fetchPlaylists(token: string): Promise<APIReturn> {
+export async function fetchCurrentUserPlaylists(token: string): APIReturn<SpotifySimplifiedPlaylist[]> {
   const simplifiedPlaylists: SpotifySimplifiedPlaylist[] = [];
 
-  let loopResponseError: SpotifyError;
+  let loopResponseError: SpotifyResponseError;
   const getPlaylists = async (href: string) => {
     await axios
       .get(href, {
@@ -26,7 +20,7 @@ export async function fetchPlaylists(token: string): Promise<APIReturn> {
         }
       })
       .catch((error: AxiosError) => {
-        loopResponseError = (error.response?.data as SpotifyResponseError).error;
+        loopResponseError = error.response?.data as SpotifyResponseError;
       });
   };
 
@@ -39,11 +33,10 @@ export async function fetchPlaylists(token: string): Promise<APIReturn> {
     })
     .then(async ({ data }: { data: SpotifyUserPlaylists }) => {
       await getPlaylists(data.href);
-      if (loopResponseError) return { data: null, error: true, errorResponse: loopResponseError };
-      return { data: simplifiedPlaylists, error: false };
+      if (loopResponseError) return { data: null, errorResponse: loopResponseError };
+      return { data: simplifiedPlaylists, errorResponse: null };
     })
     .catch((error: AxiosError) => {
-      const responseError: SpotifyResponseError = error.response?.data as SpotifyResponseError;
-      return { data: null, error: true, errorResponse: responseError.error as SpotifyError };
+      return { data: null, errorResponse: error.response?.data as SpotifyResponseError };
     });
 }

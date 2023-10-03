@@ -1,12 +1,15 @@
-import { SpotifyResponseSuccess, SpotifyError } from "./spotify";
+import { SpotifyError } from "./spotify";
 
-export * from "./spotify";
-
-type APIReturn = {
-  data: SpotifyResponseSuccess | null;
-  error: boolean;
-  errorResponse?: SpotifyError;
-};
+type APIReturn<T> = Promise<
+  | {
+      data: T;
+      errorResponse: null;
+    }
+  | {
+      data: null;
+      errorResponse: SpotifyResponseError;
+    }
+>;
 
 type HookReturn<T> = {
   data: T | null;
@@ -27,6 +30,7 @@ type PlaylistTrack = {
   id: string;
   index: number;
   track: Track;
+  isLocal: boolean;
   rearranged: boolean;
 };
 
@@ -41,4 +45,5 @@ type Track = {
   timeAdded: string;
 };
 
+export * from "./spotify";
 export type { APIReturn, HookReturn, Playlist, PlaylistTrack, Track };

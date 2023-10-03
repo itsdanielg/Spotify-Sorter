@@ -1,6 +1,7 @@
 type SpotifyUser = {
   id: string;
   display_name: string | null;
+  images: SpotifyImage[];
   type: "user";
 };
 

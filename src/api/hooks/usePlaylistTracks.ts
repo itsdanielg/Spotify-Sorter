@@ -1,9 +1,9 @@
 import { useEffect, useReducer, useState } from "react";
-import { HookReturn, PlaylistTrack, SpotifyError, SpotifyPlaylistTrack, Track } from "../../types";
+import { HookReturn, PlaylistTrack, SpotifyArtist, SpotifyError, SpotifyPlaylistTrack, Track } from "../../types";
+import { playlistTracksAreEqualByOrder, unmarkPlaylistTracks } from "@/util";
 import { getSortedPlaylist } from "../../util/getSortedPlaylist";
 import { markChangedSongs } from "../../util/markChangedSongs";
-import { unmarkPlaylistTracks } from "@/util";
-import { fetchPlaylist } from "../calls/fetchPlaylist";
+import { fetchPlaylistTracks } from "../calls";
 import { updatePlaylist } from "../calls/updatePlaylist";
 import { useToken } from "./useToken";
 
@@ -20,21 +20,24 @@ interface PlaylistAction {
   type: PlaylistActions;
 }
 
-export interface usePlaylistStateTypes {
+export interface usePlaylistTracksStateTypes {
   initializing: boolean;
   initError: boolean;
   saving: boolean;
   savingError: boolean;
 }
 
-const initialState: usePlaylistStateTypes = {
+const initialState: usePlaylistTracksStateTypes = {
   initializing: false,
   initError: false,
   saving: false,
   savingError: false
 };
 
-function usePlaylistReducer(state: usePlaylistStateTypes, action: PlaylistAction): usePlaylistStateTypes {
+function usePlaylistTracksReducer(
+  state: usePlaylistTracksStateTypes,
+  action: PlaylistAction
+): usePlaylistTracksStateTypes {
   switch (action.type) {
     case PlaylistActions.INITIALIZE:
       return { ...state, initializing: true };
@@ -55,9 +58,9 @@ function usePlaylistReducer(state: usePlaylistStateTypes, action: PlaylistAction
   }
 }
 
-export type usePlaylistReturn = {
+export type usePlaylistTracksReturn = {
   playlist: PlaylistTrack[];
-  playlistState: usePlaylistStateTypes;
+  playlistState: usePlaylistTracksStateTypes;
   isModified: boolean;
   moveTrack: (sourceIndex: number, destinationIndex: number) => void;
   sortPlaylist: (field: string) => Promise<void>;
@@ -65,7 +68,7 @@ export type usePlaylistReturn = {
   saveChanges: () => Promise<void>;
 };
 
-export function usePlaylist(playlistId: string): HookReturn<usePlaylistReturn> {
+export function usePlaylistTracks(playlistId: string): HookReturn<usePlaylistTracksReturn> {
   const { token } = useToken();
 
   const [error, setError] = useState<SpotifyError | null>(null);
@@ -74,7 +77,7 @@ export function usePlaylist(playlistId: string): HookReturn<usePlaylistReturn> {
   const [unorderedPlaylist, setUnorderedPlaylist] = useState<PlaylistTrack[]>([]);
   const [isModified, setIsModified] = useState(false);
 
-  const [playlistState, dispatch] = useReducer(usePlaylistReducer, initialState);
+  const [playlistState, dispatch] = useReducer(usePlaylistTracksReducer, initialState);
 
   const moveTrack = (sourceIndex: number, destinationIndex: number) => {
     const newPlaylist = [...playlist];
@@ -112,34 +115,30 @@ export function usePlaylist(playlistId: string): HookReturn<usePlaylistReturn> {
   };
 
   useEffect(() => {
-    for (let i = 0; i < playlist.length; i++) {
-      if (playlist[i].id !== unorderedPlaylist[i].id) {
-        setIsModified(true);
-        return;
-      }
-    }
-    setIsModified(false);
+    setIsModified(!playlistTracksAreEqualByOrder(playlist, unorderedPlaylist));
   }, [playlist, unorderedPlaylist]);
 
   useEffect(() => {
     const getPlaylist = async () => {
       dispatch({ type: PlaylistActions.INITIALIZE });
-      const { data, error, errorResponse } = await fetchPlaylist(token, playlistId);
-      if (error) {
+      const { data, errorResponse } = await fetchPlaylistTracks(token, playlistId);
+      if (errorResponse) {
         setPlaylist([]);
+        setError(errorResponse);
         dispatch({ type: PlaylistActions.INITIALIZE_ERROR });
-        return errorResponse;
+        return;
       }
 
       const dataPlaylistTracks = data as SpotifyPlaylistTrack[];
       const playlistTracks: PlaylistTrack[] = dataPlaylistTracks.map(
         (playlistTrack: SpotifyPlaylistTrack, index: number) => {
           return {
-            id: playlistTrack.track.id ?? 1,
+            id: playlistTrack.track.id,
             index: index,
+            isLocal: playlistTrack.is_local,
             track: {
               title: playlistTrack.track.name,
-              artists: playlistTrack.track.artists.map((artist: any) => artist.name),
+              artists: playlistTrack.track.artists.map((artist: SpotifyArtist) => artist.name),
               album: playlistTrack.track.album.name,
               albumURL: playlistTrack.track.album.images[0]?.url ?? "",
               releaseDate: playlistTrack.track.album.release_date,

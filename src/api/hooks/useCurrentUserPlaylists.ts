@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { HookReturn, Playlist, SpotifyError, SpotifyPlaylist, SpotifySimplifiedPlaylist } from "../../types";
-import { fetchPlaylists } from "../calls/fetchPlaylists";
+import { HookReturn, Playlist, SpotifyError, SpotifySimplifiedPlaylist } from "@/types";
+import { fetchCurrentUserPlaylists } from "../calls";
 import { useToken } from "./useToken";
 
-export type usePlaylistsReturn = {
+export type useCurrentUserPlaylistsReturn = {
   playlists: Playlist[];
 };
 
-export function usePlaylists(): HookReturn<usePlaylistsReturn> {
+export function useCurrentUserPlaylists(): HookReturn<useCurrentUserPlaylistsReturn> {
   const { token } = useToken();
 
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
@@ -15,9 +15,10 @@ export function usePlaylists(): HookReturn<usePlaylistsReturn> {
 
   useEffect(() => {
     const getPlaylists = async () => {
-      const { data, error, errorResponse } = await fetchPlaylists(token);
-      if (error) {
-        setError(errorResponse as SpotifyError);
+      const { data, errorResponse } = await fetchCurrentUserPlaylists(token);
+      if (errorResponse) {
+        setPlaylists([]);
+        setError(errorResponse.error as SpotifyError);
         return;
       }
 
@@ -27,8 +28,8 @@ export function usePlaylists(): HookReturn<usePlaylistsReturn> {
           id: playlist.id,
           name: playlist.name,
           imageURL: playlist.images[0]?.url ?? "",
-          owner: playlist.owner.display_name,
-          description: playlist.description,
+          owner: playlist.owner.display_name ?? "",
+          description: playlist.description ?? "",
           collaborative: playlist.collaborative,
           isPublic: playlist.public
         } as Playlist;

@@ -1,15 +1,15 @@
-import { useUser, useUserReturn } from "../../../api/hooks/useUser";
+import { useCurrentUser, useCurrentUserReturn } from "../../../api/hooks/useCurrentUser";
 import { AppRoutes } from "../../AppRoutes";
 import { Footer } from "../../Molecules";
 import { TokenErrorPage } from "../ErrorPage";
 import { Navigation } from "../Navigation";
 
 export function AuthenticatedPage() {
-  const { data, error } = useUser();
+  const { data, error } = useCurrentUser();
 
   if (error) return <TokenErrorPage />;
 
-  const { name } = data as useUserReturn;
+  const { name } = data as useCurrentUserReturn;
   return (
     <div className="relative w-full h-screen flex flex-col">
       <Navigation name={name} />

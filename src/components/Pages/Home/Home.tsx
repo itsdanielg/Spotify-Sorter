@@ -1,14 +1,14 @@
-import { usePlaylists, usePlaylistsReturn } from "../../../api/hooks/usePlaylists";
+import { useCurrentUserPlaylists, useCurrentUserPlaylistsReturn } from "../../../api/hooks/useCurrentUserPlaylists";
 import { Playlist } from "../../../types";
 import { PlaylistLink } from "./PlaylistLink";
 import { Loading } from "../Loading";
 import { PageLayout } from "../../Molecules";
 
 export function Home() {
-  const { data, error } = usePlaylists();
+  const { data, error } = useCurrentUserPlaylists();
 
   if (error) return <></>;
-  const { playlists } = data as usePlaylistsReturn;
+  const { playlists } = data as useCurrentUserPlaylistsReturn;
 
   if (playlists.length === 0) return <Loading />;
   return (

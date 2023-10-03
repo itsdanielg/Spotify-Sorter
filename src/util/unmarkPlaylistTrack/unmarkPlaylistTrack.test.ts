@@ -15,6 +15,7 @@ const playlistTrack: PlaylistTrack = {
     dateAdded: "",
     timeAdded: ""
   },
+  isLocal: false,
   rearranged: true
 };
 

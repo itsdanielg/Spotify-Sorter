@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, createContext, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { usePlaylist, usePlaylistReturn } from "../../../api/hooks/usePlaylist";
+import { usePlaylistTracks, usePlaylistTracksReturn } from "../../../api/hooks/usePlaylistTracks";
 import { LoaderModal, SaveSnackbar } from "../../Compounds";
 import { Loading } from "../Loading";
 import { ErrorPage } from "../ErrorPage";
@@ -9,7 +9,7 @@ import { PlaylistView } from "./PlaylistView/";
 import { PageLayout } from "../../Molecules";
 
 interface PlaylistContext {
-  playlistHook: usePlaylistReturn;
+  playlistHook: usePlaylistTracksReturn;
   isCompact: boolean;
   currentSort: string;
   setIsCompact: Dispatch<SetStateAction<boolean>>;
@@ -24,10 +24,10 @@ export function Playlist() {
   const [showSnackbar, setShowSnackbar] = useState(false);
 
   const location = useLocation();
-  const { data, error } = usePlaylist(location.pathname.substring(1));
+  const { data, error } = usePlaylistTracks(location.pathname.substring(1));
 
   if (error) return <></>;
-  const playlistHook = data as usePlaylistReturn;
+  const playlistHook = data as usePlaylistTracksReturn;
 
   if (playlistHook.playlistState.initializing) return <Loading />;
 
