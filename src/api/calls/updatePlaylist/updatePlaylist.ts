@@ -1,5 +1,5 @@
-import { APIReturn, PlaylistTrack } from "../../types";
-import { mockUpdatePlaylistItem } from "../../util/mockApi/mockUpdatePlaylistItem";
+import { APIReturn, PlaylistTrack } from "@/types";
+import { mockUpdatePlaylistItem } from "@/util/mockApi/mockUpdatePlaylistItem";
 import { updatePlaylistTrack } from "./updatePlaylistTrack";
 
 export async function updatePlaylist(
