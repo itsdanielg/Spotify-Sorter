@@ -1,9 +1,9 @@
-import { PlaylistTrack } from "../types";
+import { PlaylistTrack } from "@/types";
 import {
   sortByAlbum,
-  sortByAlbumTrack,
+  sortByTrackNumber,
   sortByArtist,
-  sortByDateAdded,
+  sortByAddedAt,
   sortByReleaseDate,
   sortByTitle
 } from "./sortComparators";
@@ -11,23 +11,23 @@ import {
 export function getSortedPlaylist(unorderedPlaylist: PlaylistTrack[], field: string): PlaylistTrack[] {
   const orderedPlaylist = [...unorderedPlaylist];
   switch (field) {
+    case "Date Added":
+      orderedPlaylist.sort(sortByAddedAt);
+      break;
+    case "Album":
+      orderedPlaylist.sort(sortByAlbum);
+      break;
+    case "Artist":
+      orderedPlaylist.sort(sortByArtist);
+      break;
     case "Release Date":
       orderedPlaylist.sort(sortByReleaseDate);
       break;
     case "Title":
       orderedPlaylist.sort(sortByTitle);
       break;
-    case "Artist":
-      orderedPlaylist.sort(sortByArtist);
-      break;
-    case "Album":
-      orderedPlaylist.sort(sortByAlbum);
-      break;
     case "Track":
-      orderedPlaylist.sort(sortByAlbumTrack);
-      break;
-    case "Date Added":
-      orderedPlaylist.sort(sortByDateAdded);
+      orderedPlaylist.sort(sortByTrackNumber);
       break;
     default:
       break;

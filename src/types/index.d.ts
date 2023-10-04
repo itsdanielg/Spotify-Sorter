@@ -29,20 +29,22 @@ type Playlist = {
 type PlaylistTrack = {
   id: string;
   index: number;
-  track: Track;
+  addedAt: Date;
+  addedBy: string;
   isLocal: boolean;
   rearranged: boolean;
+  track: Track;
 };
 
 type Track = {
   title: string;
   artists: string[];
   album: string;
-  albumURL: string;
+  albumCoverURL: string;
   trackNumber: number;
-  releaseDate: string;
-  dateAdded: string;
-  timeAdded: string;
+  releaseDate: Date;
+  explicit: boolean;
+  durationInMs: number;
 };
 
 export * from "./spotify";

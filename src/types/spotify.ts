@@ -55,7 +55,7 @@ type SpotifyPlaylistTracks = {
 
 type SpotifyPlaylistTrack = {
   added_at: string;
-  added_by: SpotifyUser;
+  added_by: Omit<SpotifyUser, "display_name" | "images">;
   is_local: boolean;
   track: SpotifyTrack;
 };

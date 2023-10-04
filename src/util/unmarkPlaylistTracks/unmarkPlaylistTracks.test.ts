@@ -1,59 +1,17 @@
 import { describe, it, expect } from "vitest";
-import { PlaylistTrack } from "@/types";
+import { mockPlaylistTracks } from "../mockPlaylistTracks";
 import { unmarkPlaylistTracks } from "./unmarkPlaylistTracks";
 
-const playlistTracks: PlaylistTrack[] = [
-  {
-    id: "",
-    index: 2,
-    track: {
-      title: "",
-      artists: [],
-      album: "",
-      albumURL: "",
-      trackNumber: 0,
-      releaseDate: "",
-      dateAdded: "",
-      timeAdded: ""
-    },
-    isLocal: false,
-    rearranged: true
-  },
-  {
-    id: "",
-    index: 0,
-    track: {
-      title: "",
-      artists: [],
-      album: "",
-      albumURL: "",
-      trackNumber: 0,
-      releaseDate: "",
-      dateAdded: "",
-      timeAdded: ""
-    },
-    isLocal: false,
-    rearranged: true
-  },
-  {
-    id: "",
-    index: 1,
-    track: {
-      title: "",
-      artists: [],
-      album: "",
-      albumURL: "",
-      trackNumber: 0,
-      releaseDate: "",
-      dateAdded: "",
-      timeAdded: ""
-    },
-    isLocal: false,
-    rearranged: true
-  }
-];
-
 describe(unmarkPlaylistTracks, () => {
+  const playlistTracks = [
+    ...mockPlaylistTracks.map((track) => {
+      return { ...track, rearranged: true };
+    })
+  ];
+  playlistTracks[0].index = 2;
+  playlistTracks[1].index = 0;
+  playlistTracks[2].index = 1;
+
   describe("unmarks tracks", () => {
     const newPlaylistTracks = unmarkPlaylistTracks(playlistTracks);
     newPlaylistTracks.forEach((newPlaylistTrack, index) => {

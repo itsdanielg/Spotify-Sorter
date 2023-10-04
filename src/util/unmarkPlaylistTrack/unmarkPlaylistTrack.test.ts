@@ -1,25 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { PlaylistTrack } from "@/types";
+import { mockPlaylistTracks } from "../mockPlaylistTracks";
 import { unmarkPlaylistTrack } from "./unmarkPlaylistTrack";
 
-const playlistTrack: PlaylistTrack = {
-  id: "",
-  index: 1,
-  track: {
-    title: "",
-    artists: [],
-    album: "",
-    albumURL: "",
-    trackNumber: 0,
-    releaseDate: "",
-    dateAdded: "",
-    timeAdded: ""
-  },
-  isLocal: false,
-  rearranged: true
-};
-
 describe(unmarkPlaylistTrack, () => {
+  const playlistTrack = mockPlaylistTracks[0];
+
   describe("rearrange value", () => {
     const oldPlaylistTrack = { ...playlistTrack, rearranged: true };
 
