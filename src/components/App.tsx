@@ -1,10 +1,10 @@
-import { useToken } from "../api/hooks/useToken";
-import { Login } from "./Pages/Login";
-import { AuthenticatedPage } from "./Pages/AuthenticatedPage";
+import { useToken } from "@/api";
+import { AppAuthenticated } from "./AppAuthenticated";
+import { LoginPage } from "./Pages";
 
 export function App() {
   const { token } = useToken();
 
-  if (!token) return <Login />;
-  return <AuthenticatedPage />;
+  if (!token) return <LoginPage />;
+  return <AppAuthenticated />;
 }

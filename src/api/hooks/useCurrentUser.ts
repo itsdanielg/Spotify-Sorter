@@ -4,6 +4,7 @@ import { fetchCurrentUser } from "../calls";
 import { useToken } from "./useToken";
 
 export type useCurrentUserReturn = {
+  id: string;
   name: string;
   images: string[];
 };
@@ -11,6 +12,7 @@ export type useCurrentUserReturn = {
 export function useCurrentUser(): HookReturn<useCurrentUserReturn> {
   const { token } = useToken();
 
+  const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [images, setImages] = useState<string[]>([]);
   const [error, setError] = useState<SpotifyError | null>(null);
@@ -24,14 +26,14 @@ export function useCurrentUser(): HookReturn<useCurrentUserReturn> {
       }
 
       const dataUser = data as SpotifyUser;
-      const name = dataUser.display_name ?? "";
 
-      setName(name.split(" ")[0]);
+      setId(dataUser.id);
+      setName((dataUser.display_name ?? "").split(" ")[0]);
       setImages(dataUser.images.map((image) => image.url));
     };
 
     getUser();
   }, []);
 
-  return { data: { name, images }, error: error };
+  return { data: { id, name, images }, error: error };
 }

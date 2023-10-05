@@ -1,17 +1,20 @@
-import { Route, Routes } from "react-router-dom";
-import { Home } from "./Pages/Home";
-import { Playlist } from "./Pages/Playlist";
+import { Routes, Route } from "react-router-dom";
+import { ErrorPage, PlaylistTracksPage, PlaylistsPage } from "./Pages";
 
 export function AppRoutes() {
   return (
     <Routes>
       <Route
         path="/"
-        element={<Home />}
+        element={<PlaylistsPage />}
+      />
+      <Route
+        path="/error"
+        element={<ErrorPage />}
       />
       <Route
         path=":id"
-        element={<Playlist />}
+        element={<PlaylistTracksPage />}
       />
     </Routes>
   );

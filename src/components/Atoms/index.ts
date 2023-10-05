@@ -2,6 +2,7 @@ export * from "./Button";
 export * from "./Hamburger";
 export * from "./Handle";
 export * from "./Image";
+export * from "./Label";
 export * from "./Loader";
 export * from "./Modal";
 export * from "./Snackbar";

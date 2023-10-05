@@ -1,5 +1,5 @@
-import { useToken } from "../../../api/hooks/useToken";
-import { Button } from "../../Atoms";
+import { useToken } from "@/api";
+import { Button } from "@/components/Atoms";
 
 export function LogoutButton() {
   const { removeToken } = useToken();

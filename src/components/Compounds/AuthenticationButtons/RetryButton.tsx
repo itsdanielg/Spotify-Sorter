@@ -1,6 +1,5 @@
-import { useToken } from "../../../api/hooks/useToken";
-import { Button } from "../../Atoms";
-import { authURL } from "../../../api/authURL";
+import { useToken, authURL } from "@/api";
+import { Button } from "@/components/Atoms";
 
 export function RetryButton() {
   const { removeToken } = useToken();

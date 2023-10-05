@@ -1,5 +1,5 @@
-import { authURL } from "../../../api/authURL";
-import { LinkButton } from "../../Atoms";
+import { authURL } from "@/api";
+import { LinkButton } from "@/components/Atoms";
 
 export function LoginButton() {
   return (
