@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { ErrorPage, PlaylistTracksPage, PlaylistsPage } from "./Pages";
+import { PlaylistTracksPage, PlaylistsPage } from "./Pages";
 
 export function AppRoutes() {
   return (
@@ -7,10 +7,6 @@ export function AppRoutes() {
       <Route
         path="/"
         element={<PlaylistsPage />}
-      />
-      <Route
-        path="/error"
-        element={<ErrorPage />}
       />
       <Route
         path=":id"

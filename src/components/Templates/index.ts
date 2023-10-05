@@ -1,3 +1,3 @@
-export * from "./Authenticated";
+export * from "./Error";
 export * from "./Loading";
 export * from "./Page";

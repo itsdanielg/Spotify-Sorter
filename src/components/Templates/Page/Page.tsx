@@ -1,28 +1,30 @@
-import { Navigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import { SpotifyError } from "@/types";
 import { Footer } from "@/components/Layouts";
-import { Loading } from "../Loading";
+import { Loading, Error } from "@/components/Templates";
 
 interface PageProps {
-  children: JSX.Element | JSX.Element[];
+  className?: string;
   isLoading?: boolean;
   error?: SpotifyError | null;
-  className?: string;
+  children?: JSX.Element | JSX.Element[];
 }
 
-export function Page({ children, isLoading = false, error, className = "" }: PageProps) {
-  if (error) {
-    return (
-      <Navigate
-        to="/error"
-        state={error}
-      />
-    );
-  }
+export function Page({ className = "", isLoading = false, error = null, children = <></> }: PageProps) {
   return (
     <div className="flex flex-col w-full h-screen overflow-x-hidden">
-      <div className={twMerge("w-full grow", className)}>{isLoading ? <Loading /> : children}</div>
+      <div className={twMerge("w-full grow", className)}>
+        {isLoading ? (
+          <Loading />
+        ) : error ? (
+          <Error
+            status={error.status}
+            message={error.message}
+          />
+        ) : (
+          children
+        )}
+      </div>
       <Footer />
     </div>
   );

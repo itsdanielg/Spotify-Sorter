@@ -17,19 +17,14 @@ export function PlaylistViewTrack({
 }: PlaylistViewTrackProps) {
   const { isCompact } = useContext(PlaylistTracksContext);
 
-  const isLocalBG = isLocal ? "bg-blue-50" : "";
-  const indexBG = index % 2 === 0 ? "bg-gray-5 hover:bg-gray-6" : "bg-gray-5 hover:bg-gray-4";
-  const rearrangedBG = rearranged ? "text-black bg-green hover:bg-greenHover" : "text-white";
-  const compactStyle = isCompact ? "text-sm overflow-x-auto md:overflow-hidden [&>*]:truncate" : "";
-
   return (
     <div
       className={twMerge(
-        "flex items-center w-full transition-all [&>*]:p-2",
-        isLocalBG,
-        indexBG,
-        rearrangedBG,
-        compactStyle
+        "flex items-center w-full transition-all [&>*]:p-2 bg-gray-6 hover:bg-opacity-100 text-white",
+        `${isLocal ? "bg-yellow-600" : ""}`,
+        `${index % 2 === 0 ? "bg-opacity-25" : "bg-opacity-50"}`,
+        `${rearranged ? " bg-green " : ""}`,
+        `${isCompact ? "text-sm overflow-x-auto md:overflow-hidden [&>*]:truncate" : ""}`
       )}>
       <span className={`${isCompact ? "w-16 md:w-[5%]" : "w-[5%]"} text-center`}>{index + 1}</span>
       <span className={`${isCompact ? "w-20 md:w-[10%]" : "w-[10%]"} text-center`}>

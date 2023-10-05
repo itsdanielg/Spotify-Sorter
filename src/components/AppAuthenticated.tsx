@@ -1,20 +1,13 @@
-import { Navigate } from "react-router-dom";
 import { useCurrentUser, useCurrentUserReturn } from "@/api";
 import { UserContext } from "@/context";
 import { AppRoutes } from "./AppRoutes";
 import { Navigation } from "./Layouts";
+import { Page } from "./Templates";
 
 export function AppAuthenticated() {
   const { data, error } = useCurrentUser();
 
-  if (error) {
-    return (
-      <Navigate
-        to="/error"
-        state={error}
-      />
-    );
-  }
+  if (error) return <Page error={error} />;
 
   return (
     <UserContext.Provider value={data as useCurrentUserReturn}>
