@@ -1,12 +1,14 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { APIReturn, SpotifyResponseError } from "@/types";
 
 export async function updatePlaylistTrack(
   token: string,
   playlistId: string,
   startIndex: number,
   endIndex: number
-): Promise<{ hasSwitched: boolean | null; error: boolean }> {
-  if (startIndex === endIndex) return { hasSwitched: false, error: false };
+): APIReturn<boolean> {
+  if (startIndex === endIndex) return { data: false, errorResponse: null };
+
   return axios
     .put(
       `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
@@ -22,9 +24,9 @@ export async function updatePlaylistTrack(
       }
     )
     .then(() => {
-      return { hasSwitched: true, error: false };
+      return { data: true, errorResponse: null };
     })
-    .catch(() => {
-      return { hasSwitched: null, error: true };
+    .catch((error: AxiosError) => {
+      return { data: null, errorResponse: error.response?.data as SpotifyResponseError };
     });
 }

@@ -1,7 +1,7 @@
 import { useState, useReducer, useEffect } from "react";
 import { PlaylistTrack, HookReturn, SpotifyError, SpotifyPlaylistTrack, SpotifyArtist, Track } from "@/types";
 import { markRearrangedTracks, getSortedPlaylist, unmarkPlaylistTracks, playlistTracksAreEqualByOrder } from "@/util";
-import { updatePlaylist, fetchPlaylistTracks } from "../calls";
+import { updatePlaylistTracks, fetchPlaylistTracks } from "../calls";
 import { usePlaylistTracksStateTypes, initialState, PlaylistActions, PlaylistTracksReducer } from "../reducers";
 import { useToken } from "./useToken";
 
@@ -50,8 +50,8 @@ export function usePlaylistTracks(playlistId: string): HookReturn<usePlaylistTra
 
   const saveChanges = async () => {
     dispatch({ type: PlaylistActions.SAVE });
-    const { data, error } = await updatePlaylist(token, playlistId, unorderedPlaylist, playlistTracks);
-    if (error) {
+    const { data, errorResponse } = await updatePlaylistTracks(token, playlistId, unorderedPlaylist, playlistTracks);
+    if (errorResponse) {
       dispatch({ type: PlaylistActions.SAVE_ERROR });
       return;
     }
