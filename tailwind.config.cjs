@@ -30,6 +30,9 @@ module.exports = {
         "gray-5": "#2b292a", // playlist
         "gray-6": "#4a4545", // playlist hover
         "gray-7": "rgba(74, 69, 69, 0.7)" // playlist hover, opacity
+      },
+      fontSize: {
+        xxs: "0.625rem"
       }
     }
   },

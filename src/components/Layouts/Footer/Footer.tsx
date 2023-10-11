@@ -4,8 +4,8 @@ const GITHUB_URL = "https://github.com/itsdanielg";
 
 export function Footer() {
   return (
-    <footer className="flex items-center justify-center text-center w-full pt-8 pb-4 mt-auto">
-      <span className="text-white text-xs">
+    <footer className="flex items-center justify-center text-center w-full pt-8 pb-4 px-8 mt-auto">
+      <span className="text-white text-xxs">
         This website uses the{" "}
         <a
           className="text-green md:hover:text-green transition-all "

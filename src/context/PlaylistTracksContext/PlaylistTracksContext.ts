@@ -1,5 +1,5 @@
 import { usePlaylistTracksReturn } from "@/api";
-import { initialState } from "@/api/reducers";
+import { PlaylistAction, initialState } from "@/api/reducers";
 import { Dispatch, SetStateAction, createContext } from "react";
 
 interface PlaylistContext {
@@ -14,7 +14,9 @@ const initPlaylistTracks: PlaylistContext = {
   playlistHook: {
     playlistTracks: [],
     playlistState: initialState,
-    isModified: false,
+    dispatch: function (value: PlaylistAction): void {
+      return;
+    },
     moveTrack: function (sourceIndex: number, destinationIndex: number): void {
       return;
     },
