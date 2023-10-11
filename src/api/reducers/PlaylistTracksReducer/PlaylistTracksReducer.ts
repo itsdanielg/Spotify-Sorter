@@ -1,29 +1,33 @@
 export interface usePlaylistTracksStateTypes {
-  initializing: boolean;
-  initError: boolean;
-  saving: boolean;
-  savingError: boolean;
+  isInit: boolean;
+  isModified: boolean;
+  saving: "idle" | "ongoing" | "complete";
+  hasSavingError: boolean;
+  playlistTracksUpdated: number;
 }
 
 export const initialState: usePlaylistTracksStateTypes = {
-  initializing: false,
-  initError: false,
-  saving: false,
-  savingError: false
+  isInit: true,
+  isModified: false,
+  saving: "idle",
+  hasSavingError: false,
+  playlistTracksUpdated: 0
 };
 
 export interface PlaylistAction {
   type: PlaylistActions;
+  payload?: number;
 }
 
 export enum PlaylistActions {
   INITIALIZE,
   INITIALIZE_SUCCESS,
-  INITIALIZE_ERROR,
+  MODIFY,
+  UNMODIFY,
   SAVE,
   SAVE_SUCCESS,
   SAVE_ERROR,
-  CANCEL
+  SAVE_RESET
 }
 
 export function PlaylistTracksReducer(
@@ -32,19 +36,21 @@ export function PlaylistTracksReducer(
 ): usePlaylistTracksStateTypes {
   switch (action.type) {
     case PlaylistActions.INITIALIZE:
-      return { ...state, initializing: true };
+      return { ...state, isInit: true };
     case PlaylistActions.INITIALIZE_SUCCESS:
-      return { ...state, initializing: false, initError: false };
-    case PlaylistActions.INITIALIZE_ERROR:
-      return { ...state, initializing: false, initError: true };
+      return { ...state, isInit: false };
+    case PlaylistActions.MODIFY:
+      return { ...state, isModified: true };
+    case PlaylistActions.UNMODIFY:
+      return { ...state, isModified: false };
     case PlaylistActions.SAVE:
-      return { ...state, saving: true };
+      return { ...state, saving: "ongoing" };
     case PlaylistActions.SAVE_SUCCESS:
-      return { ...state, saving: true };
-    case PlaylistActions.SAVE:
-      return { ...state, saving: true };
-    case PlaylistActions.CANCEL:
-      return { ...state, saving: false };
+      return { ...state, saving: "complete", hasSavingError: false, playlistTracksUpdated: action.payload! };
+    case PlaylistActions.SAVE_ERROR:
+      return { ...state, saving: "complete", hasSavingError: true, playlistTracksUpdated: action.payload! };
+    case PlaylistActions.SAVE_RESET:
+      return { ...state, saving: "idle" };
     default:
       return state;
   }

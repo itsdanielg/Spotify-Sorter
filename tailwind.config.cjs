@@ -6,7 +6,7 @@ module.exports = {
       animation: {
         fade: "fadeOut 0.5s 2.6s",
         linkFade: "fadeIn 0.25s",
-        snackbar: "fadeIn 0.5s, fadeOut 0.5s 2.6s"
+        snackbar: "fadeIn 0.5s, fadeOut 0.5s 4.6s"
       },
       keyframes: () => ({
         fadeIn: {

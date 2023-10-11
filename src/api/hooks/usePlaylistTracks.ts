@@ -1,16 +1,22 @@
-import { useState, useReducer, useEffect } from "react";
+import { Dispatch, useState, useReducer, useEffect } from "react";
 import { PlaylistTrack, HookReturn, SpotifyError, SpotifyPlaylistTrack, SpotifyArtist, Track } from "@/types";
 import { markRearrangedTracks, getSortedPlaylist, unmarkPlaylistTracks, playlistTracksAreEqualByOrder } from "@/util";
 import { updatePlaylistTracks, fetchPlaylistTracks } from "../calls";
-import { usePlaylistTracksStateTypes, initialState, PlaylistActions, PlaylistTracksReducer } from "../reducers";
+import {
+  usePlaylistTracksStateTypes,
+  PlaylistAction,
+  PlaylistTracksReducer,
+  initialState,
+  PlaylistActions
+} from "../reducers";
 import { useToken } from "./useToken";
 
 export type usePlaylistTracksReturn = {
   playlistTracks: PlaylistTrack[];
   playlistState: usePlaylistTracksStateTypes;
-  isModified: boolean;
+  dispatch: Dispatch<PlaylistAction>;
   moveTrack: (sourceIndex: number, destinationIndex: number) => void;
-  sortPlaylist: (field: string) => Promise<void>;
+  sortPlaylist: (field: string) => void;
   cancelChanges: () => void;
   saveChanges: () => Promise<void>;
 };
@@ -18,11 +24,9 @@ export type usePlaylistTracksReturn = {
 export function usePlaylistTracks(playlistId: string): HookReturn<usePlaylistTracksReturn> {
   const { token } = useToken();
 
-  const [error, setError] = useState<SpotifyError | null>(null);
-
   const [playlistTracks, setPlaylistTracks] = useState<PlaylistTrack[]>([]);
-  const [unorderedPlaylist, setUnorderedPlaylist] = useState<PlaylistTrack[]>([]);
-  const [isModified, setIsModified] = useState(false);
+  const [unmodifiedPlaylistTracks, setUnmodifiedPlaylistTracks] = useState<PlaylistTrack[]>([]);
+  const [error, setError] = useState<SpotifyError | null>(null);
 
   const [playlistState, dispatch] = useReducer(PlaylistTracksReducer, initialState);
 
@@ -34,14 +38,14 @@ export function usePlaylistTracks(playlistId: string): HookReturn<usePlaylistTra
     setPlaylistTracks(newPlaylist);
   };
 
-  const sortPlaylist = async (field: string) => {
+  const sortPlaylist = (field: string) => {
     const sortedPlaylist = getSortedPlaylist(playlistTracks, field);
     markRearrangedTracks(sortedPlaylist);
     setPlaylistTracks(sortedPlaylist);
   };
 
   const cancelChanges = () => {
-    const oldPlaylist = [...unorderedPlaylist].map((song) => {
+    const oldPlaylist = [...unmodifiedPlaylistTracks].map((song) => {
       song.rearranged = false;
       return song;
     });
@@ -50,20 +54,31 @@ export function usePlaylistTracks(playlistId: string): HookReturn<usePlaylistTra
 
   const saveChanges = async () => {
     dispatch({ type: PlaylistActions.SAVE });
-    const { data, errorResponse } = await updatePlaylistTracks(token, playlistId, unorderedPlaylist, playlistTracks);
+    const { data, errorResponse } = await updatePlaylistTracks(
+      token,
+      playlistId,
+      unmodifiedPlaylistTracks,
+      playlistTracks
+    );
     if (errorResponse) {
-      dispatch({ type: PlaylistActions.SAVE_ERROR });
+      setError(errorResponse.error as SpotifyError);
+      dispatch({ type: PlaylistActions.SAVE_ERROR, payload: data! });
       return;
     }
+
     const newPlaylist = unmarkPlaylistTracks(playlistTracks);
     setPlaylistTracks(newPlaylist);
-    setUnorderedPlaylist(newPlaylist);
-    dispatch({ type: PlaylistActions.SAVE_SUCCESS });
+    setUnmodifiedPlaylistTracks(newPlaylist);
+    dispatch({ type: PlaylistActions.SAVE_SUCCESS, payload: data! });
   };
 
   useEffect(() => {
-    setIsModified(!playlistTracksAreEqualByOrder(playlistTracks, unorderedPlaylist));
-  }, [playlistTracks, unorderedPlaylist]);
+    if (!playlistTracksAreEqualByOrder(playlistTracks, unmodifiedPlaylistTracks)) {
+      dispatch({ type: PlaylistActions.MODIFY });
+      return;
+    }
+    dispatch({ type: PlaylistActions.UNMODIFY });
+  }, [playlistTracks]);
 
   useEffect(() => {
     const getPlaylist = async () => {
@@ -72,7 +87,7 @@ export function usePlaylistTracks(playlistId: string): HookReturn<usePlaylistTra
       if (errorResponse) {
         setPlaylistTracks([]);
         setError(errorResponse.error as SpotifyError);
-        dispatch({ type: PlaylistActions.INITIALIZE_ERROR });
+        dispatch({ type: PlaylistActions.INITIALIZE_SUCCESS });
         return;
       }
 
@@ -101,14 +116,14 @@ export function usePlaylistTracks(playlistId: string): HookReturn<usePlaylistTra
       );
 
       setPlaylistTracks(playlistTracks);
-      setUnorderedPlaylist(playlistTracks);
+      setUnmodifiedPlaylistTracks(playlistTracks);
       dispatch({ type: PlaylistActions.INITIALIZE_SUCCESS });
     };
     getPlaylist();
   }, []);
 
   return {
-    data: { playlistTracks, playlistState, isModified, moveTrack, sortPlaylist, cancelChanges, saveChanges },
+    data: { playlistTracks, playlistState, dispatch, moveTrack, sortPlaylist, cancelChanges, saveChanges },
     error
   };
 }

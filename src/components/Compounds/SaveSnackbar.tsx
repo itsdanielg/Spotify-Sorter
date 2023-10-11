@@ -1,27 +1,33 @@
-import { Dispatch, SetStateAction } from "react";
-import { Snackbar } from "../Atoms/Snackbar";
+import { useContext } from "react";
+import { PlaylistTracksContext } from "@/context";
+import { PlaylistActions } from "@/api/reducers";
+import { Snackbar } from "@/components/Atoms";
 
-interface SaveSnackbar {
-  label: string;
-  showSnackbar: boolean;
-  setShowSnackbar: Dispatch<SetStateAction<boolean>>;
-  error?: boolean;
-}
+export function SaveSnackbar() {
+  const {
+    playlistHook: { playlistState, dispatch }
+  } = useContext(PlaylistTracksContext);
 
-export function SaveSnackbar({ label, showSnackbar, setShowSnackbar, error }: SaveSnackbar) {
   const showResult = () => {
     setTimeout(() => {
-      setShowSnackbar(false);
-    }, 3000);
+      dispatch({ type: PlaylistActions.SAVE_RESET });
+    }, 5000);
   };
 
-  const visibility = showSnackbar ? "visible animate-snackbar" : "invisible";
-  const errorStyle = error ? "bg-red" : "bg-green";
+  const visibility = playlistState.saving === "complete" ? "visible animate-snackbar" : "invisible";
+  const errorStyle = playlistState.hasSavingError ? "bg-red-400" : "bg-green";
+  const label = playlistState.hasSavingError ? "Saving incomplete. Please try again." : "Saving complete!";
 
-  if (showSnackbar) showResult();
+  if (playlistState.saving === "complete") showResult();
   return (
-    <Snackbar className={`${visibility} ${errorStyle} w-72 h-12`}>
+    <Snackbar className={`${visibility} ${errorStyle} flex flex-col p-4 px-6`}>
       <span>{label}</span>
+      <span>
+        <strong>{playlistState.playlistTracksUpdated}</strong>
+        {playlistState.playlistTracksUpdated === 1
+          ? " total track has been updated!"
+          : " total tracks have been updated!"}
+      </span>
     </Snackbar>
   );
 }

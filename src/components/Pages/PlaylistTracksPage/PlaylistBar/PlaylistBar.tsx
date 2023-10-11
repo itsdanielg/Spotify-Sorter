@@ -5,7 +5,7 @@ import { LabeledSwitch } from "@/components/Compounds";
 
 export function PlaylistBar() {
   const {
-    playlistHook: { playlistTracks, isModified, cancelChanges, saveChanges },
+    playlistHook: { playlistTracks, playlistState, cancelChanges, saveChanges },
     isCompact,
     currentSort,
     setIsCompact,
@@ -34,7 +34,7 @@ export function PlaylistBar() {
       <div className="flex flex-col md:flex-row gap-2 ml-auto">
         <Button
           label="Cancel Changes"
-          disabled={!isModified}
+          disabled={!playlistState.isModified}
           onClick={() => {
             setCurrentSort("");
             cancelChanges();
@@ -42,7 +42,7 @@ export function PlaylistBar() {
         />
         <Button
           label="Save Changes"
-          disabled={!isModified}
+          disabled={!playlistState.isModified}
           onClick={() => saveChanges()}
         />
       </div>

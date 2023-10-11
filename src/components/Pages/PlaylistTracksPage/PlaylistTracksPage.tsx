@@ -10,7 +10,6 @@ import { PlaylistView } from "./PlaylistView";
 export function PlaylistTracksPage() {
   const [isCompact, setIsCompact] = useState(true);
   const [currentSort, setCurrentSort] = useState("");
-  const [showSnackbar, setShowSnackbar] = useState(false);
 
   const location = useLocation();
   const { data, error } = usePlaylistTracks(location.pathname.substring(1));
@@ -19,19 +18,15 @@ export function PlaylistTracksPage() {
 
   return (
     <Page
-      isLoading={playlistHook.playlistState.initializing ?? true}
+      isLoading={playlistHook.playlistState.isInit}
       error={error}>
       <PlaylistTracksContext.Provider value={{ playlistHook, isCompact, currentSort, setIsCompact, setCurrentSort }}>
         <div className="flex flex-col items-center gap-4 mt-4">
           <PlaylistBar />
           <PlaylistView />
         </div>
-        <LoaderModal isLoading={playlistHook.playlistState.saving} />
-        <SaveSnackbar
-          label={"Saving complete"}
-          showSnackbar={showSnackbar}
-          setShowSnackbar={setShowSnackbar}
-        />
+        <LoaderModal isLoading={playlistHook.playlistState.saving === "ongoing"} />
+        <SaveSnackbar />
       </PlaylistTracksContext.Provider>
     </Page>
   );
