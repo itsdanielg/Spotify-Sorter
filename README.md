@@ -1,6 +1,3 @@
-!-- PROJECT LOGO -->
-<br />
-
 <div align="center">
   <a href="https://vitejs.dev/">
     <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" alt="Logo" width="80" height="80">
